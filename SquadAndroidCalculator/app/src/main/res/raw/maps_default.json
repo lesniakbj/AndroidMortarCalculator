@@ -1,0 +1,76 @@
+[
+  {
+    "mapId": 1,
+    "mapName": "Belaya",
+    "mapArea": "",
+    "mapDescription": "Belaya is set in a Winter landscape with many hills covered in dense forests, several village and factories spaced out across the map.",
+    "mapWidth": 3900,
+    "mapHeight": 3900,
+    "layerList": []
+  },
+  {
+    "mapId": 2,
+    "mapName": "Fool's Road",
+    "mapArea": "",
+    "mapDescription": "Fool's Road is set in an Eastern European map, with large, expansive terrain covered in dense forests with buildings spaced out across the map.",
+    "mapWidth": 1760,
+    "mapHeight": 1760,
+    "layerList": []
+  },
+  {
+    "mapId": 3,
+    "mapName": "Gorodok",
+    "mapArea": "",
+    "mapDescription": "Gorodok is an Eastern European map, with large expansive terrain.",
+
+    "mapWidth": 4340,
+    "mapHeight": 4340,
+    "layerList": []
+  },
+  {
+    "mapId": 4,
+    "mapName": "Mestia",
+    "mapArea": "",
+    "mapDescription": "Mestia is set in a Georgian landscape, with large, expansive terrain covered in dense forests with buildings, valleys and hills spaced out across the map.",
+    "mapWidth": 2400,
+    "mapHeight": 2400,
+    "layerList": []
+  },
+  {
+    "mapId": 5,
+    "mapName": "Narva",
+    "mapArea": "",
+    "mapDescription": "Narva consists of a large city situated on the Narva River in the Republic of Estonia. The city has a large castle, a railway yard, large avenues and boulevards, towering blocks, and a city center.",
+    "mapWidth": 2200,
+    "mapHeight": 2200,
+    "layerList": []
+  },
+  {
+    "mapId": 6,
+    "mapName": "Operation First Light",
+    "mapArea": "",
+    "mapDescription": " Operation First Light is set in an Eastern European map, with terrain covered in dense forests and fog. This map is mostly infantry based combat. The limited vehicles in play serve only to supply FOBs or provide limited fire support as the dense forests limit their effectiveness and allow them to be ambushed from any side. There are, however, a few places where a well positioned vehicle can slaughter Infantry that are not careful. The map is not so large as to necessitate the use of vehicles for transportation. The fighting consists mostly of close-quarters or mid-range firefights in the urban areas or in the forests.",
+    "mapWidth": 1430,
+    "mapHeight": 1430,
+    "layerList": []
+  },
+  {
+    "mapId": 7,
+    "mapName": "Yehorivka",
+    "mapArea": "",
+    "mapDescription": "Yehorivka is an Eastern European map, with large terrain, two highways, and two center villages. It was updated in Alpha v9. The map is characterized by large open plains, patches of forest, some scattered villages, and an industrial storage sight roughly in the center of the map. This map provides an excellent opportunity to engage in true mechanized warfare, with vehicle transportation being absolutely essential due to the maps size and lack of cover in certain areas. It is common to see small 3-man APC squads on this map, hunting enemy vehicles and supporting infantry assaults.",
+
+    "mapWidth": 4180,
+    "mapHeight": 4180,
+    "layerList": []
+  },
+  {
+    "mapId": 8,
+    "mapName": "Chora",
+    "mapArea": "",
+    "mapDescription": "Chora, formerly known as Chora Green Zone, is set in a large river valley located near Kabul, Afghanistan, consisting of mud brick compounds and large green fields surrounded by low walls. This map can be somewhat claustrophobic to play on. The mud brick compounds and walls cover the entire area, forcing vehicles to stick to the roads and pathways lest they become flipped or stuck on something.",
+    "mapWidth": 3850,
+    "mapHeight": 3850,
+    "layerList": []
+  }
+]

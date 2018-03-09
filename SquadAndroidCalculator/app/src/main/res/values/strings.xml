@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SquadAndroidCalculator</string>
+    <string name="str_choose_map">Please choose your map below</string>
+    <string name="str_calc_detail_title">Set mortar parameters using the map</string>
+    <string name="str_btn_edit_points">Edit Points</string>
+    <string name="str_btn_assing_targets">Assign Targets</string>
+</resources>
