@@ -96,11 +96,12 @@ public class SquadMap implements Serializable {
 
     @Override
     public String toString() {
-        return "Map{" +
-                "id=" + mapId +
+        return "SquadMap{" +
+                "mapId=" + mapId +
                 ", mapName='" + mapName + '\'' +
+                ", mapArea=" + mapArea +
                 ", mapDescription='" + mapDescription + '\'' +
-                ", mapImageResource='" + mapImage + '\'' +
+                ", mapImage='" + mapImage + '\'' +
                 ", mapWidth=" + mapWidth +
                 ", mapHeight=" + mapHeight +
                 ", layerList=" + layerList +

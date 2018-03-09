@@ -22,16 +22,14 @@ public class ImageTouchListener implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                float touchX = event.getX();
-                float touchY = event.getY();
-
-                lastX = touchX;
-                lastY = touchY;
+                lastX = event.getX();
+                lastY = event.getY();
                 break;
             }
-            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_UP: {
                 v.performClick();
                 break;
+            }
             default:
                 break;
         }

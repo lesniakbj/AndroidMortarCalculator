@@ -1,6 +1,5 @@
 package com.squadfinder.brend.squadandroidcalculator.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.view.GestureDetector;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,8 +15,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
+import com.squadfinder.brend.squadandroidcalculator.domain.calc.PointManager;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageGestureDetector;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageTouchListener;
+import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView;
 
 
 /**
@@ -27,7 +27,6 @@ import com.squadfinder.brend.squadandroidcalculator.listener.ImageTouchListener;
 
 public class MapDetailActivity extends Activity {
 
-    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +48,7 @@ public class MapDetailActivity extends Activity {
         TextView mapDimensions = findViewById(R.id.mapDetailMapDimensions);
         mapName.setText(loadedMap.getMapName());
         mapDesc.setText(loadedMap.getMapDescription());
-        mapDimensions.setText("Dimensions: " + loadedMap.getDimensionString());
+        mapDimensions.setText(loadedMap.getDimensionString());
 
         // Load the Map Image View
         ImageView imageView = findViewById(R.id.mapImageView);
@@ -59,8 +58,9 @@ public class MapDetailActivity extends Activity {
 
         // Setup detectors needed locally and for chaining
         imageView.setOnTouchListener(new ImageTouchListener(new GestureDetector(this, new ImageGestureDetector(this, imageView))));
+        OuterHorizontalScrollView hScrollView = findViewById(R.id.mapHorizontalScroll);
         ScrollView vScrollView = findViewById(R.id.mapVerticalScroll);
-        HorizontalScrollView hScrollView = findViewById(R.id.mapHorizontalScroll);
+        hScrollView.setScrollView(vScrollView);
         vScrollView.requestDisallowInterceptTouchEvent(true);
         hScrollView.requestDisallowInterceptTouchEvent(true);
 
@@ -77,5 +77,12 @@ public class MapDetailActivity extends Activity {
             Intent assignIntent = new Intent(this, AssignTargetsActivity.class);
             this.startActivity(assignIntent);
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Clear saved points if we back out of the activity
+        PointManager.getInstance().clearPoints();
+        finish();
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mortarHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/str_mortars"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/textDark" />
+
+    <com.squadfinder.brend.squadandroidcalculator.view.MaxHeightListView
+        android:id="@+id/mortarMarkListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/str_targets"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@color/textDark" />
+
+    <com.squadfinder.brend.squadandroidcalculator.view.MaxHeightListView
+        android:id="@+id/targetMarkListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -80,4 +80,18 @@ public class Layer {
     public void setNumberOfFlags(int numberOfFlags) {
         this.numberOfFlags = numberOfFlags;
     }
+
+    @Override
+    public String toString() {
+        return "Layer{" +
+                "id=" + id +
+                ", layerName='" + layerName + '\'' +
+                ", teamOne=" + teamOne +
+                ", teamOneTickets=" + teamOneTickets +
+                ", teamTwo=" + teamTwo +
+                ", teamTwoTickets=" + teamTwoTickets +
+                ", gameMode=" + gameMode +
+                ", numberOfFlags=" + numberOfFlags +
+                '}';
+    }
 }

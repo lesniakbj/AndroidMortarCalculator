@@ -10,30 +10,29 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.ContextCompat;
-import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import com.squadfinder.brend.squadandroidcalculator.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
+import com.squadfinder.brend.squadandroidcalculator.domain.calc.PointManager;
+import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
 
 /**
  * Created by brend on 3/9/2018.
  */
 
 public class ImageGestureDetector extends GestureDetector.SimpleOnGestureListener {
+    private static final int POINT_WIDTH = 12;
+
     private final ImageView imageView;
     private final Activity activity;
     private Bitmap bitmap;
-    private List<Pair<PointF, Paint>> paintedPoints;
 
     public ImageGestureDetector(Activity activity, ImageView imageView) {
         this.activity = activity;
         this.imageView = imageView;
-        this.paintedPoints = new ArrayList<>();
         checkBitmap();
     }
 
@@ -56,12 +55,10 @@ public class ImageGestureDetector extends GestureDetector.SimpleOnGestureListene
     }
 
     private AlertDialog buildAlertDialog(float x, float y) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, android.R.style.Theme_Material_Dialog);
         return builder.setTitle("What are you marking...")
                 .setItems(new String[]{"Mortar", "Target"}, (dialog, which) -> {
-                    // Add a point based on where we touched
-                    addPointToDraw(x, y, which == 0 ? R.color.colorLightGreen : R.color.colorLightRed);
-                    // Draw the point list
+                    PointManager.getInstance().addPoint(x, y, which == 0 ? PointType.MORTAR : PointType.TARGET);
                     drawPoints();
                 }).create();
     }
@@ -75,21 +72,6 @@ public class ImageGestureDetector extends GestureDetector.SimpleOnGestureListene
         }
     }
 
-    private void addPointToDraw(float x, float y, int colorId) {
-        // Create a point for that location
-        PointF point = new PointF(x, y);
-        Paint paint = new Paint();
-        paint.setColor(ContextCompat.getColor(activity, colorId));
-        paint.setStrokeWidth(4);
-        paint.setAntiAlias(true);
-        Pair<PointF, Paint> pPair = new Pair<>(point, paint);
-
-        // Add it to the list of known points
-        if (!paintedPoints.contains(pPair)) {
-            paintedPoints.add(pPair);
-        }
-    }
-
     private void drawPoints() {
         // Create our working and mutable bitmaps
         Bitmap working = Bitmap.createBitmap(bitmap);
@@ -98,24 +80,34 @@ public class ImageGestureDetector extends GestureDetector.SimpleOnGestureListene
         // Add points to the canvas
         Canvas c = new Canvas(mutable);
         int i = 1;
-        for(Pair<PointF, Paint> point : paintedPoints) {
-            PointF p = point.first;
-            Paint p2 = point.second;
-            Paint workingPaint = new Paint(p2);
-            workingPaint.setStyle(Paint.Style.FILL);
-            RectF rect = new RectF(p.x - 12, p.y - 12, p.x + 12, p.y + 12);
-            c.drawRect(rect, workingPaint);
-            workingPaint.setTextSize(24);
-            c.drawText(Integer.toString(i), p.x + 20, p.y + 20, workingPaint);
-            workingPaint.setStyle(Paint.Style.STROKE);
-            workingPaint.setColor(Color.BLACK);
-            c.drawRect(rect, workingPaint);
-            workingPaint.setStrokeWidth(1);
-            c.drawText(Integer.toString(i), p.x + 20, p.y + 20, workingPaint);
+        for(MarkPoint point : PointManager.getInstance().getPointList()) {
+            drawSinglePoint(c, point);
             i++;
         }
 
         // Set our image view to the mutated bitmap
         imageView.setImageBitmap(mutable);
+    }
+
+    private void drawSinglePoint(Canvas c, MarkPoint point) {
+        PointF p = point.getPointCoordinates();
+        RectF rect = new RectF(p.x - POINT_WIDTH, p.y - POINT_WIDTH, p.x + POINT_WIDTH, p.y + POINT_WIDTH);
+        Paint basePaint = new Paint();
+        basePaint.setColor(point.getPointType() == PointType.MORTAR ? ContextCompat.getColor(activity, R.color.colorLightGreen) : ContextCompat.getColor(activity, R.color.colorLightRed));
+        basePaint.setStyle(Paint.Style.FILL);
+        basePaint.setAntiAlias(true);
+        basePaint.setStrokeWidth(4);
+        basePaint.setTextSize(24);
+
+        c.drawRect(rect, basePaint);
+        // c.drawText(Integer.toString(i), p.x + 20, p.y + 20, basePaint);
+
+        Paint outline = new Paint();
+        outline.setStyle(Paint.Style.STROKE);
+        outline.setColor(Color.BLACK);
+        outline.setStrokeWidth(2);
+
+        c.drawRect(rect, outline);
+        // c.drawText(Integer.toString(i), p.x + 20, p.y + 20, outline);
     }
 }

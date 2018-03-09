@@ -13,6 +13,9 @@
     <string name="str_ok">OK</string>
     <string name="str_loading">Loading…</string>
 
+    <string name="str_mortars"><u>Mortar Marks</u></string>
+    <string name="str_targets"><u>Target Marks</u></string>
+
     <string name="str_help_title">How to Use</string>
     <string name="str_help">
         Welcome to Squad Finder\'s Mortar Calculator. Usage of this app is fairly simple, allowing
