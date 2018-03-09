@@ -71,6 +71,7 @@
     "mapDescription": "Chora, formerly known as Chora Green Zone, is set in a large river valley located near Kabul, Afghanistan, consisting of mud brick compounds and large green fields surrounded by low walls. This map can be somewhat claustrophobic to play on. The mud brick compounds and walls cover the entire area, forcing vehicles to stick to the roads and pathways lest they become flipped or stuck on something.",
     "mapWidth": 3850,
     "mapHeight": 3850,
+    "mapScalePixesToMeters": 1.05325,
     "layerList": []
   },
   {

@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  */
 
 public class EditPointsActivity extends BaseActivity {
+    private static final int PAD = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +33,22 @@ public class EditPointsActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.edit_points_layout);
 
-        TextView layout = findViewById(R.id.mortarHeader);
-
-        // Load Mortar Marks
+        // Get our Screen Height
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int height = dm.heightPixels;
+        int listViewMax = (height / 2) - PAD;
+
+        // Load Mortar Marks
         MaxHeightListView mortarListView = findViewById(R.id.mortarMarkListView);
-        mortarListView.setMaxHeight((dm.heightPixels / 2) - 30);
+        mortarListView.setMaxHeight(listViewMax);
         List<MarkPoint> mortars = PointManager.getInstance().getPointsByType(PointType.MORTAR);
         ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mortars.stream().map((pt) -> pt.getPointCoordinates().toString()).collect(Collectors.toList()));
         mortarListView.setAdapter(ad);
 
         // Load Target Marks
         MaxHeightListView targetListView = findViewById(R.id.targetMarkListView);
-        targetListView.setMaxHeight((dm.heightPixels / 2) - 30);
+        targetListView.setMaxHeight(listViewMax);
         List<MarkPoint> targets = PointManager.getInstance().getPointsByType(PointType.TARGET);
         ArrayAdapter ad2 = new ArrayAdapter(this, android.R.layout.simple_list_item_1, targets.stream().map((pt) -> pt.getPointCoordinates().toString()).collect(Collectors.toList()));
         targetListView.setAdapter(ad2);

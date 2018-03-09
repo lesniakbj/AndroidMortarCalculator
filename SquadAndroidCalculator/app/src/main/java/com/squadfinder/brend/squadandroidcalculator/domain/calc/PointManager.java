@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 public class PointManager {
     private List<MarkPoint> pointList;
+    private float distanceScale;
 
     private static PointManager instance;
 
@@ -41,6 +42,14 @@ public class PointManager {
 
     public void setPointList(List<MarkPoint> pointList) {
         this.pointList = pointList;
+    }
+
+    public float getDistanceScale() {
+        return distanceScale;
+    }
+
+    public void setDistanceScale(float distanceScale) {
+        this.distanceScale = distanceScale;
     }
 
     public void clearPoints() {

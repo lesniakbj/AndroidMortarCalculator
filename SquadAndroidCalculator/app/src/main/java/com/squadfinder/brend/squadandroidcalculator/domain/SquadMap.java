@@ -20,6 +20,7 @@ public class SquadMap implements Serializable {
     private String mapImage;
     private int mapWidth;
     private int mapHeight;
+    private float mapScalePixesToMeters;
     private List<Layer> layerList;
 
     public int getId() {
@@ -94,6 +95,14 @@ public class SquadMap implements Serializable {
         this.mapArea = mapArea;
     }
 
+    public float getMapScalePixesToMeters() {
+        return mapScalePixesToMeters;
+    }
+
+    public void setMapScalePixesToMeters(float mapScalePixesToMeters) {
+        this.mapScalePixesToMeters = mapScalePixesToMeters;
+    }
+
     @Override
     public String toString() {
         return "SquadMap{" +
@@ -104,6 +113,7 @@ public class SquadMap implements Serializable {
                 ", mapImage='" + mapImage + '\'' +
                 ", mapWidth=" + mapWidth +
                 ", mapHeight=" + mapHeight +
+                ", mapScalePixesToMeters=" + mapScalePixesToMeters +
                 ", layerList=" + layerList +
                 '}';
     }
