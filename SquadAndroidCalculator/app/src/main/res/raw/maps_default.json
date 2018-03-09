@@ -72,5 +72,50 @@
     "mapWidth": 3850,
     "mapHeight": 3850,
     "layerList": []
+  },
+  {
+  "mapId": 9,
+  "mapName": "Kohat Toi",
+  "mapArea": "",
+  "mapDescription": "Kohat Toi is set in a large river valley in Pakistan, consisting of large rigid hills and small rural communities.",
+  "mapWidth": 3960,
+  "mapHeight": 3960,
+  "layerList": []
+  },
+  {
+    "mapId": 10,
+    "mapName": "Kokan",
+    "mapArea": "",
+    "mapDescription": "Kokan consists of a series of hamlets and villages separated by large areas of green and farmland.",
+    "mapWidth": 2530,
+    "mapHeight": 2530,
+    "layerList": []
+  },
+  {
+    "mapId": 11,
+    "mapName": "Logar Valley",
+    "mapArea": "",
+    "mapDescription": "Logar Valley is set in three rural communities inside a valley in Afghanistan, with tall hills setting them apart.",
+    "mapWidth": 1760,
+    "mapHeight": 1760,
+    "layerList": []
+  },
+    {
+    "mapId": 12,
+    "mapName": "Sumari Bala",
+    "mapArea": "",
+    "mapDescription": "Sumari Bala is set in a large, clustered village in the Islamic Republic of Pakistan cut by a river and surrounded by farmland. The map is mostly close quarters engagment with firefights across city streets, back alleys, and the open fields to the north and south. Larger vehicles tend not to last long in the claustrophobic town, but this is also where the Technical excels, darting down streets and through fields to hit and then flee, with ample buildings to provide cover for a getaway.",
+    "mapWidth": 1320,
+    "mapHeight": 1320,
+    "layerList": []
+  },
+  {
+    "mapId": 13,
+    "mapName": "Al Basrah",
+    "mapArea": "",
+    "mapDescription": "Al Basrah consists of a city in the Republic of Iraq along the Shatt al-Arab River with the Qamat Ali Canal splitting off from it leading to a nearby village.",
+    "mapWidth": 1320,
+    "mapHeight": 1320,
+    "layerList": []
   }
 ]

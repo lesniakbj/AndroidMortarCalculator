@@ -1,7 +1,29 @@
 <resources>
     <string name="app_name">SquadAndroidCalculator</string>
+
+    <string name="str_welcome">Welcome to Squad Finder\'s Mortar Calculator!</string>
+
     <string name="str_choose_map">Please choose your map below</string>
+
     <string name="str_calc_detail_title">Set mortar parameters using the map</string>
+
     <string name="str_btn_edit_points">Edit Points</string>
     <string name="str_btn_assing_targets">Assign Targets</string>
+
+    <string name="str_ok">OK</string>
+    <string name="str_loading">Loading…</string>
+
+    <string name="str_help_title">How to Use</string>
+    <string name="str_help">
+        Welcome to Squad Finder\'s Mortar Calculator. Usage of this app is fairly simple, allowing
+        you to get rounds on target almost immediately.\n\nFirst, choose a map. Once a map has
+        been chosen, the application will pop up some details about the map, along with
+        a movable map where you can place mortar and target markers. To place a marker, double
+        tap the map in the location where you would like the mark.\n\nIf you do not like
+        your marks, you may edit them by choosing the option below the map.
+        If you are satisfied, you must now move to the assigning phase.\n\nIn the assigning phase,
+        you must assign targets to each mortar that you have placed. Finally,
+        once every mortar has targets (each mortar can have more than 1 target), you can move
+        to the calculate phase, where azimuth and angle are calculated for you.
+    </string>
 </resources>
