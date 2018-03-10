@@ -57,7 +57,7 @@ public class MapDetailActivity extends Activity {
         Glide.with(this).load(loadedMap.getMapImageResourceId(this)).into(imageView);
 
         // Setup detectors needed locally and for chaining
-        imageView.setOnTouchListener(new ImageTouchListener(new GestureDetector(this, new ImageGestureDetector(this, imageView))));
+        imageView.setOnTouchListener(new ImageTouchListener(new GestureDetector(this, new ImageGestureDetector(this, imageView, loadedMap.getMapScalePixesToMeters()))));
         OuterHorizontalScrollView hScrollView = findViewById(R.id.mapHorizontalScroll);
         ScrollView vScrollView = findViewById(R.id.mapVerticalScroll);
         hScrollView.setScrollView(vScrollView);

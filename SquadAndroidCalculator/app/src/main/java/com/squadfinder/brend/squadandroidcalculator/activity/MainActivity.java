@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.squadfinder.brend.squadandroidcalculator.R;
-import com.squadfinder.brend.squadandroidcalculator.adapter.ListViewMapAdapter;
+import com.squadfinder.brend.squadandroidcalculator.adapter.SquadMapListViewAdapter;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 import com.squadfinder.brend.squadandroidcalculator.listener.ListViewMapListener;
 import com.squadfinder.brend.squadandroidcalculator.util.RawResourceLoader;
@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void addScrollViewContent(Activity context, SquadMap[] maps) {
-        ArrayAdapter<SquadMap> mapAdapter = new ListViewMapAdapter(this, maps);
+        ArrayAdapter<SquadMap> mapAdapter = new SquadMapListViewAdapter(this, maps);
         ListView mapList = context.findViewById(R.id.mapListView);
         mapList.setAdapter(mapAdapter);
         mapList.setOnItemClickListener(new ListViewMapListener(this));

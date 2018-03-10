@@ -1,5 +1,6 @@
 package com.squadfinder.brend.squadandroidcalculator.listener;
 
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +25,8 @@ public class ImageTouchListener implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN: {
                 lastX = event.getX();
                 lastY = event.getY();
+                Log.d("LISTENER", String.format("Touch: [%f/%f].", lastX, lastY));
+
                 break;
             }
             case MotionEvent.ACTION_UP: {

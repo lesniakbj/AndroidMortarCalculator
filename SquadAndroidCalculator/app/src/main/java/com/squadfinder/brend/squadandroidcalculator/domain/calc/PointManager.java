@@ -1,5 +1,8 @@
 package com.squadfinder.brend.squadandroidcalculator.domain.calc;
 
+import android.graphics.PointF;
+import android.util.Log;
+
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
 
 import java.util.ArrayList;
@@ -12,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class PointManager {
     private List<MarkPoint> pointList;
-    private float distanceScale;
+    private float metersPerPixel;
 
     private static PointManager instance;
 
@@ -32,8 +35,26 @@ public class PointManager {
         pointList.add(new MarkPoint(x, y, pointType));
     }
 
+    public double getDistanceBetweenMarkPoints(MarkPoint m1, MarkPoint m2) {
+        PointF p1 = m1.getPointCoordinates();
+        PointF p2 = m2.getPointCoordinates();
+        float x1 = p1.x - p2.x;
+        float y1 = p1.y - p2.y;
+        return getScaledValue(Math.hypot(x1, y1));
+    }
+
+    public double getScaledValue(double value) {
+        return value / metersPerPixel;
+    }
+
     public List<MarkPoint> getPointsByType(PointType type) {
-        return pointList.stream().filter((mp) -> mp.getPointType() == type).collect(Collectors.toList());
+        List<MarkPoint> points = new ArrayList<>();
+        for(MarkPoint p : pointList) {
+            if(p.getPointType().equals(type)) {
+                points.add(p);
+            }
+        }
+        return points;
     }
 
     public List<MarkPoint> getPointList() {
@@ -44,12 +65,12 @@ public class PointManager {
         this.pointList = pointList;
     }
 
-    public float getDistanceScale() {
-        return distanceScale;
+    public float getMetersPerPixel() {
+        return metersPerPixel;
     }
 
-    public void setDistanceScale(float distanceScale) {
-        this.distanceScale = distanceScale;
+    public void setMetersPerPixel(float metersPerPixel) {
+        this.metersPerPixel = metersPerPixel;
     }
 
     public void clearPoints() {

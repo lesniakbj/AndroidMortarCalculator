@@ -17,11 +17,11 @@ import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
  * Created by brend on 3/6/2018.
  */
 
-public class ListViewMapAdapter extends ArrayAdapter<SquadMap> {
+public class SquadMapListViewAdapter extends ArrayAdapter<SquadMap> {
     private final Activity context;
     private final SquadMap[] maps;
 
-    public ListViewMapAdapter(Activity context, SquadMap[] maps) {
+    public SquadMapListViewAdapter(Activity context, SquadMap[] maps) {
         super(context, -1, maps);
         this.context = context;
         this.maps = maps;

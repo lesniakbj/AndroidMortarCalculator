@@ -30,10 +30,11 @@ public class ImageGestureDetector extends GestureDetector.SimpleOnGestureListene
     private final Activity activity;
     private Bitmap bitmap;
 
-    public ImageGestureDetector(Activity activity, ImageView imageView) {
+    public ImageGestureDetector(Activity activity, ImageView imageView, float mapScale) {
         this.activity = activity;
         this.imageView = imageView;
         checkBitmap();
+        PointManager.getInstance().setMetersPerPixel(mapScale);
     }
 
     @Override
