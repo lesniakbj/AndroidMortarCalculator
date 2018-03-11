@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.activity.points.AssignTargetsActivity;
 import com.squadfinder.brend.squadandroidcalculator.activity.points.EditPointsActivity;
@@ -63,8 +65,11 @@ public class MapDetailActivity extends Activity {
             .into(imageView, new Callback() {
                 @Override
                 public void onSuccess() {
-                    app.setCurrentMapDrawable(imageView.getDrawable());
+                    app.setCurrentMapDrawable(self, imageView.getDrawable());
                     app.fillImageViewMarkPoints(self, imageView, app.getMarkPointList());
+                    Glide.with(self).load(app.getCurrentMapDrawable())
+                            .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
+                            .into(imageView);
                 }
 
                 @Override

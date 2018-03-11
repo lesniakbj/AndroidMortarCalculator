@@ -2,12 +2,12 @@ package com.squadfinder.brend.squadandroidcalculator.listener;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 
+import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
@@ -32,7 +32,10 @@ public class ListViewMarkPointDragListener implements View.OnDragListener {
         switch(event.getAction()) {
             case DragEvent.ACTION_DRAG_ENTERED:
                 viewBgDrawable = v.getBackground();
-                v.setBackgroundColor(Color.GREEN);
+
+                // Draw the distance to the mortar here
+                v.setBackgroundColor(activity.getResources().getColor(R.color.colorAccentTransparent));
+
                 v.invalidate();
                 return true;
             case DragEvent.ACTION_DRAG_EXITED:
@@ -52,6 +55,7 @@ public class ListViewMarkPointDragListener implements View.OnDragListener {
                 if(success) {
                     app.getListViewAdapterForType(PointType.TARGET).remove(target);
                     app.getListViewAdapterForType(PointType.TARGET).notifyDataSetChanged();
+                    app.getListViewAdapterForType(PointType.MORTAR).notifyDataSetChanged();
                     Log.d("LISTENER", String.format("Assignments: %s", app.getTargetMappings()));
                 }
 

@@ -1,8 +1,10 @@
 package com.squadfinder.brend.squadandroidcalculator.listener;
 
+import android.app.Activity;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -12,23 +14,21 @@ import android.view.View;
  */
 
 public class ListViewMarkPointShadowBuilder extends View.DragShadowBuilder {
+    private static final double scaleFactor = .75;
     private static Drawable shadow;
 
-    ListViewMarkPointShadowBuilder(View v) {
+    ListViewMarkPointShadowBuilder(Activity activity, View v) {
         super(v);
-        shadow = new ColorDrawable(Color.LTGRAY);
+        v.buildDrawingCache();
+        shadow = new BitmapDrawable(activity.getResources(), v.getDrawingCache());
     }
 
     @Override
     public void onProvideShadowMetrics (Point size, Point touch) {
-        int width = getView().getWidth() / 2;
-        int height = getView().getHeight() / 2;
+        int width = (int)(getView().getWidth() * scaleFactor);
+        int height = (int)(getView().getHeight() * scaleFactor);
         shadow.setBounds(0, 0, width, height);
-
-        // Sets the size parameter's width and height values. These get back to the system through the size parameter.
         size.set(width, height);
-
-        // Sets the touch point's position to be in the middle of the drag shadow
         touch.set(width / 2, height / 2);
     }
 

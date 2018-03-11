@@ -5,10 +5,11 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.activity.base.BaseActivity;
-import com.squadfinder.brend.squadandroidcalculator.adapter.MarkPointListViewAdapter;
+import com.squadfinder.brend.squadandroidcalculator.adapter.MarkPointTargetListViewAdapter;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
@@ -53,11 +54,13 @@ public class AssignTargetsActivity extends BaseActivity {
     private void loadListView(MortarCalculatorApplication app, MaxHeightListView listView, PointType type) {
         listView.setMaxHeight(listViewMaxHeight);
         List<MarkPoint> points = app.getMarkPointsByType(type);
-        ArrayAdapter<MarkPoint> mpArrayAdapter = new MarkPointListViewAdapter(this, points);
+        ArrayAdapter<MarkPoint> mpArrayAdapter = new MarkPointTargetListViewAdapter(this, points);
         listView.setAdapter(mpArrayAdapter);
         listView.setLongClickable(true);
         listView.setOnItemClickListener(new ListViewMarkPointListener(this));
         listView.setOnItemLongClickListener(new ListViewMarkPointLongClickListener(this));
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listView.setSelector(R.color.colorAccentTransparent);
         app.setListViewAdapterForType(mpArrayAdapter, type);
     }
 }

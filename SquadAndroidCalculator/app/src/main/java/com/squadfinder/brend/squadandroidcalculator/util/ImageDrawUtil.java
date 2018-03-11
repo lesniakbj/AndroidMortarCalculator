@@ -80,7 +80,7 @@ public class ImageDrawUtil {
             Bitmap mutable = working.copy(Bitmap.Config.ARGB_8888, true);
 
             Canvas c = new Canvas(mutable);
-            circleSinglePoint(context, drawable, c, point);
+            circleSinglePoint(context, c, point);
 
             return new BitmapDrawable(context.getResources(), mutable);
         }
@@ -88,7 +88,7 @@ public class ImageDrawUtil {
         return null;
     }
 
-    private static void circleSinglePoint(Activity context, Drawable drawable, Canvas c, MarkPoint point) {
+    private static void circleSinglePoint(Activity context, Canvas c, MarkPoint point) {
         PointF p = point.getPointCoordinates();
         Paint basePaint = getPaintForPoint(context, point);
         basePaint.setStyle(Paint.Style.STROKE);
@@ -103,5 +103,53 @@ public class ImageDrawUtil {
         basePaint.setStrokeWidth(4);
         basePaint.setTextSize(24);
         return basePaint;
+    }
+
+    public static Drawable fillImageViewGridLines(Activity context, Drawable drawable, double majorGridDistancePx, double minorGridDistancePx, int width, int height) {
+        // Get the bitmap
+        BitmapDrawable bd = (BitmapDrawable)drawable;
+        if(bd != null) {
+            Bitmap bitmap = bd.getBitmap();
+
+            // Create our working and mutable bitmaps
+            Bitmap working = Bitmap.createBitmap(bitmap);
+            Bitmap mutable = working.copy(Bitmap.Config.ARGB_8888, true);
+
+            Canvas c = new Canvas(mutable);
+            drawGridLines(context, c, majorGridDistancePx, minorGridDistancePx, width, height);
+
+            return new BitmapDrawable(context.getResources(), mutable);
+        }
+
+        return null;
+    }
+
+    private static void drawGridLines(Activity context, Canvas c, double majorGridDistancePx, double minorGridDistancePx, int width, int height) {
+        Paint paint = new Paint();
+        paint.setColor(ContextCompat.getColor(context, R.color.colorBlackTransparent));
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(4);
+
+        double curMajor = majorGridDistancePx;
+        while(curMajor < width) {
+            float fMajor = (float) curMajor;
+            c.drawLine(fMajor, 0, fMajor, height, paint);
+            c.drawLine(0, fMajor, width, fMajor, paint);
+            curMajor += majorGridDistancePx;
+        }
+
+        paint.setColor(ContextCompat.getColor(context, R.color.colorGrayTransparent));
+        paint.setStrokeWidth(2);
+        double curMinor = minorGridDistancePx;
+        int iter = 1;
+        while(curMinor < width) {
+            float fMinor = (float) curMinor;
+            if(iter % 3 != 0) {
+                c.drawLine(fMinor, 0, fMinor, height, paint);
+                c.drawLine(0, fMinor, width, fMinor, paint);
+            }
+            curMinor += minorGridDistancePx;
+            iter++;
+        }
     }
 }

@@ -29,7 +29,7 @@ public class ListViewMarkPointLongClickListener implements AdapterView.OnItemLon
         ClipData data = new ClipData(markPointId, new String[]{ ClipDescription.MIMETYPE_TEXT_PLAIN }, item);
 
         // Start the drag
-        View.DragShadowBuilder shadow = new ListViewMarkPointShadowBuilder(view);
+        View.DragShadowBuilder shadow = new ListViewMarkPointShadowBuilder(activity, view);
         ViewCompat.startDragAndDrop(view, data, shadow, null, 0);
         return true;
     }

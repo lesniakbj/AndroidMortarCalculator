@@ -2,11 +2,15 @@ package com.squadfinder.brend.squadandroidcalculator.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
+import com.squadfinder.brend.squadandroidcalculator.domain.calc.MapGridUtil;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
 import com.squadfinder.brend.squadandroidcalculator.util.ImageDrawUtil;
@@ -48,7 +52,14 @@ public class MortarCalculatorApplication extends Application {
             currentPointList = new ArrayList<>();
             currentMarkPointId = 1;
         }
-        currentPointList.add(new MarkPoint(currentMarkPointId, x, y, pointType));
+        MarkPoint mp = new MarkPoint(currentMarkPointId, x, y, pointType);
+        String gridX = MapGridUtil.getHorizontalGridMajor(currentMap.getMapScalePixesPerMeter(), x);
+        String gridY = MapGridUtil.getVerticalGridMajor(currentMap.getMapScalePixesPerMeter(), y);
+        String gridKeypad = MapGridUtil.getGridKeypad(currentMap.getMapScalePixesPerMeter(), x, y);
+        String gridSubKeypadKeypad = MapGridUtil.getGridSubKeypad(currentMap.getMapScalePixesPerMeter(), x, y);
+        mp.setMapGrid(gridX + gridY + " - " + gridKeypad + " - " + gridSubKeypadKeypad);
+        Log.d("APPLICATION", String.format("Grid: %s", mp.getMapGrid()));
+        currentPointList.add(mp);
         currentMarkPointId++;
     }
 
@@ -68,8 +79,17 @@ public class MortarCalculatorApplication extends Application {
         return currentMapDrawable;
     }
 
-    public void setCurrentMapDrawable(Drawable currentMapDrawable) {
-        this.currentMapDrawable = currentMapDrawable;
+    public void setCurrentMapDrawable(Activity activity, Drawable currentMapDrawable) {
+        boolean firstSet = false;
+        if(MortarCalculatorApplication.currentMapDrawable == null) {
+            firstSet = true;
+        }
+
+        MortarCalculatorApplication.currentMapDrawable = currentMapDrawable;
+
+        if(firstSet) {
+            addGridLinesToMap(activity);
+        }
     }
 
     public void deleteMarkPoint(MarkPoint editPoint) {
@@ -87,14 +107,14 @@ public class MortarCalculatorApplication extends Application {
     public void fillImageViewMarkPoints(Activity activity, ImageView imageView, List<MarkPoint> points) {
         Drawable updated = ImageDrawUtil.fillImageViewMarkPoints(activity, currentMapDrawable, imageView, points);
         if(updated != null) {
-            setCurrentMapDrawable(updated);
+            setCurrentMapDrawable(activity, updated);
         }
     }
 
     public void circleMarkPoint(Activity activity, MarkPoint editPoint) {
         Drawable updated = ImageDrawUtil.circleMarkPoint(activity, currentMapDrawable, editPoint);
         if(updated != null) {
-            setCurrentMapDrawable(updated);
+            setCurrentMapDrawable(activity, updated);
         }
     }
 
@@ -137,6 +157,7 @@ public class MortarCalculatorApplication extends Application {
         }
         currentTargets.add(targetMark);
         targetMappings.put(mortarMark, currentTargets);
+        mortarMark.addMappedPoint(targetMark);
         return true;
     }
 
@@ -166,5 +187,16 @@ public class MortarCalculatorApplication extends Application {
 
     public Map<MarkPoint, List<MarkPoint>> getTargetMappings() {
         return targetMappings;
+    }
+
+    public void addGridLinesToMap(Activity activity) {
+        double scale = currentMap.getMapScalePixesPerMeter();
+        double majorGridDistancePx = MapGridUtil.getMajorGridPixelDistance(scale);
+        double minorGridDistancePx = MapGridUtil.getMinorGridPixelDistanceFromMajorGridPixelScale(majorGridDistancePx);
+
+        Drawable updated = ImageDrawUtil.fillImageViewGridLines(activity, currentMapDrawable, majorGridDistancePx, minorGridDistancePx, currentMap.getMapWidth(), currentMap.getMapHeight());
+        if(updated != null) {
+            setCurrentMapDrawable(activity, updated);
+        }
     }
 }

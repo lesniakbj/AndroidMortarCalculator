@@ -6,6 +6,9 @@ import android.os.Parcelable;
 
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by brend on 3/9/2018.
  */
@@ -13,6 +16,8 @@ public class MarkPoint implements Parcelable {
     private Integer id;
     private PointF pointCoordinates;
     private PointType pointType;
+    private List<MarkPoint> mappedPoints;
+    private String mapGrid;
 
     public MarkPoint(Integer id, float x, float y, PointType pointType) {
         this.id = id;
@@ -54,6 +59,25 @@ public class MarkPoint implements Parcelable {
         this.pointType = pointType;
     }
 
+    public void addMappedPoint(MarkPoint mp) {
+        if(mappedPoints == null) {
+            mappedPoints = new ArrayList<>();
+        }
+        mappedPoints.add(mp);
+    }
+
+    public List<MarkPoint> getMappedPoints() {
+        return mappedPoints;
+    }
+
+    public String getMapGrid() {
+        return mapGrid;
+    }
+
+    public void setMapGrid(String mapGrid) {
+        this.mapGrid = mapGrid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,6 +99,8 @@ public class MarkPoint implements Parcelable {
                 "id=" + id +
                 ", pointCoordinates=" + pointCoordinates +
                 ", pointType=" + pointType +
+                ", mappedPoints=" + mappedPoints +
+                ", mapGrid='" + mapGrid + '\'' +
                 '}';
     }
 

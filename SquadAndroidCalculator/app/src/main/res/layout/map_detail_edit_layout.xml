@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textSize="12sp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorAccentTransparent"
             android:text="@string/str_mark_edit_mode_title" />
         <TextView
             android:id="@+id/mapDetailMapName"
