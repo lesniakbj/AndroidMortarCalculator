@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.squadfinder.brend.squadandroidcalculator.activity.MapDetailActivity;
+import com.squadfinder.brend.squadandroidcalculator.activity.map.MapDetailActivity;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 

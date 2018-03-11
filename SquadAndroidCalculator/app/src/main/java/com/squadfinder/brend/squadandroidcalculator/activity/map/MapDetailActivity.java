@@ -1,4 +1,4 @@
-package com.squadfinder.brend.squadandroidcalculator.activity;
+package com.squadfinder.brend.squadandroidcalculator.activity.map;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squadfinder.brend.squadandroidcalculator.R;
+import com.squadfinder.brend.squadandroidcalculator.activity.points.AssignTargetsActivity;
+import com.squadfinder.brend.squadandroidcalculator.activity.points.EditPointsActivity;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageGestureDetector;

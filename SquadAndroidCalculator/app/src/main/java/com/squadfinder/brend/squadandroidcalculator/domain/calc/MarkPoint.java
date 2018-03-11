@@ -14,12 +14,8 @@ public class MarkPoint implements Parcelable {
     private PointF pointCoordinates;
     private PointType pointType;
 
-    public MarkPoint(PointF pointCoordinates, PointType pointType) {
-        this.pointCoordinates = pointCoordinates;
-        this.pointType = pointType;
-    }
-
-    public MarkPoint(float x, float y, PointType pointType) {
+    public MarkPoint(Integer id, float x, float y, PointType pointType) {
+        this.id = id;
         this.pointCoordinates = new PointF(x, y);
         this.pointType = pointType;
     }
@@ -65,16 +61,12 @@ public class MarkPoint implements Parcelable {
 
         MarkPoint markPoint = (MarkPoint) o;
 
-        if (pointCoordinates != null ? !pointCoordinates.equals(markPoint.pointCoordinates) : markPoint.pointCoordinates != null)
-            return false;
-        return pointType == markPoint.pointType;
+        return id != null ? id.equals(markPoint.id) : markPoint.id == null;
     }
 
     @Override
     public int hashCode() {
-        int result = pointCoordinates != null ? pointCoordinates.hashCode() : 0;
-        result = 31 * result + (pointType != null ? pointType.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override

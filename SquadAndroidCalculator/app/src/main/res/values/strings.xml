@@ -1,25 +1,18 @@
 <resources>
-    <string name="app_name">SquadAndroidCalculator</string>
-
+    <string name="app_name">Squad Mortar Calculator</string>
     <string name="str_welcome">Welcome to Squad Finder\'s Mortar Calculator!</string>
-
     <string name="str_choose_map">Please choose your map below</string>
-
     <string name="str_calc_detail_title">Set mortar parameters using the map</string>
-
     <string name="str_btn_edit_points">Edit Points</string>
     <string name="str_btn_delete_point">Delete Point</string>
     <string name="str_btn_assing_targets">Assign Targets</string>
-
+    <string name="str_btn_confirm_assign">Confirm Assignments</string>
     <string name="str_ok">OK</string>
     <string name="str_loading">Loading…</string>
-
     <string name="str_mortars"><u>Mortar Marks</u></string>
     <string name="str_targets"><u>Target Marks</u></string>
-
     <string name="str_mark_edit_mode_title">Edit Mode</string>
     <string name="str_mark_edit_mode">You are in point edit mode, place your point to continue.</string>
-
     <string name="str_help_title">How to Use</string>
     <string name="str_help">
         Welcome to Squad Finder\'s Mortar Calculator. Usage of this app is fairly simple, allowing

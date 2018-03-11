@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squadfinder.brend.squadandroidcalculator.R;
+import com.squadfinder.brend.squadandroidcalculator.activity.base.BaseActivity;
 import com.squadfinder.brend.squadandroidcalculator.adapter.SquadMapListViewAdapter;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 import com.squadfinder.brend.squadandroidcalculator.listener.ListViewMapListener;

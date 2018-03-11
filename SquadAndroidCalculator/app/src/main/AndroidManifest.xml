@@ -18,9 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MapDetailActivity" />
-        <activity android:name=".activity.MapDetailEditActivity" />
-        <activity android:name=".activity.EditPointsActivity" />
-        <activity android:name=".activity.AssignTargetsActivity" />
+        <activity android:name=".activity.map.MapDetailActivity" />
+        <activity android:name=".activity.map.MapDetailEditActivity" />
+        <activity android:name=".activity.points.EditPointsActivity" />
+        <activity android:name=".activity.points.AssignTargetsActivity" />
     </application>
 </manifest>

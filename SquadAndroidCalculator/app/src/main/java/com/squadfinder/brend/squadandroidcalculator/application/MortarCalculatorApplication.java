@@ -3,6 +3,7 @@ package com.squadfinder.brend.squadandroidcalculator.application;
 import android.app.Activity;
 import android.app.Application;
 import android.graphics.drawable.Drawable;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
@@ -11,17 +12,25 @@ import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
 import com.squadfinder.brend.squadandroidcalculator.util.ImageDrawUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by brend on 3/10/2018.
  */
 
 public class MortarCalculatorApplication extends Application {
-    private SquadMap currentMap;
-    private List<MarkPoint> currentPointList;
-    private MarkPoint currentEditMarkPoint;
-    private Drawable currentMapDrawable;
+    private static SquadMap currentMap;
+    private static List<MarkPoint> currentPointList;
+    private static MarkPoint currentEditMarkPoint;
+    private static Drawable currentMapDrawable;
+    private static int currentMarkPointId;
+
+    // For Target Mapping
+    private static Map<MarkPoint, List<MarkPoint>> targetMappings;
+    private static ArrayAdapter<MarkPoint> mortarArrayAdapter;
+    private static ArrayAdapter<MarkPoint> targetArrayAdapter;
 
     private static final int MARK_IMAGE_WIDTH = 2048;
     private static final int MARK_IMAGE_HEIGHT = 2048;
@@ -31,14 +40,16 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void setCurrentMap(SquadMap currentMap) {
-        this.currentMap = currentMap;
+        MortarCalculatorApplication.currentMap = currentMap;
     }
 
     public void addMarkPoint(float x, float y, PointType pointType) {
         if(currentPointList == null) {
             currentPointList = new ArrayList<>();
+            currentMarkPointId = 1;
         }
-        currentPointList.add(new MarkPoint(x, y, pointType));
+        currentPointList.add(new MarkPoint(currentMarkPointId, x, y, pointType));
+        currentMarkPointId++;
     }
 
     public List<MarkPoint> getMarkPointList() {
@@ -102,9 +113,58 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void clear() {
-        currentMap = null;
-        currentPointList = null;
-        currentMapDrawable = null;
-        currentEditMarkPoint = null;
+       currentMap = null;
+       currentPointList = null;
+       currentEditMarkPoint = null;
+       currentMapDrawable = null;
+       targetMappings = null;
+    }
+
+    public boolean addMortarMapping(MarkPoint mortarMark, MarkPoint targetMark) {
+        if(targetMappings == null) {
+            targetMappings = new HashMap<>();
+        }
+
+        if(mortarMark.getPointType() != PointType.MORTAR) {
+            return false;
+        }
+
+        List<MarkPoint> currentTargets;
+        if(targetMappings.containsKey(mortarMark)) {
+            currentTargets = targetMappings.get(mortarMark);
+        } else {
+            currentTargets = new ArrayList<>();
+        }
+        currentTargets.add(targetMark);
+        targetMappings.put(mortarMark, currentTargets);
+        return true;
+    }
+
+    public MarkPoint getMarkPointByStringId(String id) {
+        for(MarkPoint mp : currentPointList) {
+            if (mp.getId().equals(Integer.parseInt(id))) {
+                return mp;
+            }
+        }
+        return null;
+    }
+
+    public void setListViewAdapterForType(ArrayAdapter<MarkPoint> adapter, PointType type) {
+        if(type == PointType.MORTAR) {
+            mortarArrayAdapter = adapter;
+        } else {
+            targetArrayAdapter = adapter;
+        }
+    }
+
+    public ArrayAdapter<MarkPoint> getListViewAdapterForType(PointType type) {
+        if(type == PointType.MORTAR) {
+            return mortarArrayAdapter;
+        }
+        return targetArrayAdapter;
+    }
+
+    public Map<MarkPoint, List<MarkPoint>> getTargetMappings() {
+        return targetMappings;
     }
 }

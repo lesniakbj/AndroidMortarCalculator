@@ -10,9 +10,8 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.squadfinder.brend.squadandroidcalculator.activity.AssignTargetsActivity;
-import com.squadfinder.brend.squadandroidcalculator.activity.MapDetailActivity;
-import com.squadfinder.brend.squadandroidcalculator.activity.MapDetailEditActivity;
+import com.squadfinder.brend.squadandroidcalculator.activity.map.MapDetailActivity;
+import com.squadfinder.brend.squadandroidcalculator.activity.map.MapDetailEditActivity;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;

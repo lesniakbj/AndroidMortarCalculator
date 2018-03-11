@@ -1,4 +1,4 @@
-package com.squadfinder.brend.squadandroidcalculator.activity;
+package com.squadfinder.brend.squadandroidcalculator.activity.base;
 
 import android.app.Activity;
 import android.os.Bundle;

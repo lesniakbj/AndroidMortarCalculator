@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
+import com.squadfinder.brend.squadandroidcalculator.listener.ListViewMarkPointDragListener;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class MarkPointListViewAdapter extends ArrayAdapter<MarkPoint> {
         viewHolder.getMarkPointCoordinatesTextView().setText(String.format("Image Coordinates: %s", markPoints.get(i).getPointCoordinates().toString()));
         viewHolder.getMarkPointGridTextView().setText(String.format("Grid: %s", "NO GRID YET"));
 
+        rowView.setOnDragListener(new ListViewMarkPointDragListener(context, markPoints.get(i)));
         return rowView;
     }
 

@@ -1,8 +1,7 @@
-package com.squadfinder.brend.squadandroidcalculator.activity;
+package com.squadfinder.brend.squadandroidcalculator.activity.map;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -25,7 +24,6 @@ import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageGestureDetector;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageTouchListener;
 import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by brend on 3/10/2018.
