@@ -21,7 +21,7 @@ public class MortarCalculatorApplication extends Application {
     private SquadMap currentMap;
     private List<MarkPoint> currentPointList;
     private MarkPoint currentEditMarkPoint;
-    private Drawable currentDrawing;
+    private Drawable currentMapDrawable;
 
     private static final int MARK_IMAGE_WIDTH = 2048;
     private static final int MARK_IMAGE_HEIGHT = 2048;
@@ -45,8 +45,46 @@ public class MortarCalculatorApplication extends Application {
         return currentPointList;
     }
 
-    public void drawMarkPoints(Activity activity, ImageView imageView, List<MarkPoint> points) {
-        ImageDrawUtil.drawMarkPoints(activity, imageView, points);
+    public void setMarkPointToEdit(MarkPoint markPointToEdit) {
+        this.currentEditMarkPoint = markPointToEdit;
+    }
+
+    public MarkPoint getMarkPointToEdit() {
+        return currentEditMarkPoint;
+    }
+
+    public Drawable getCurrentMapDrawable() {
+        return currentMapDrawable;
+    }
+
+    public void setCurrentMapDrawable(Drawable currentMapDrawable) {
+        this.currentMapDrawable = currentMapDrawable;
+    }
+
+    public void deleteMarkPoint(MarkPoint editPoint) {
+        currentPointList.remove(editPoint);
+    }
+
+    public static int getMarkImageWidth() {
+        return MARK_IMAGE_WIDTH;
+    }
+
+    public static int getMarkImageHeight() {
+        return MARK_IMAGE_HEIGHT;
+    }
+
+    public void fillImageViewMarkPoints(Activity activity, ImageView imageView, List<MarkPoint> points) {
+        Drawable updated = ImageDrawUtil.fillImageViewMarkPoints(activity, currentMapDrawable, imageView, points);
+        if(updated != null) {
+            setCurrentMapDrawable(updated);
+        }
+    }
+
+    public void circleMarkPoint(Activity activity, MarkPoint editPoint) {
+        Drawable updated = ImageDrawUtil.circleMarkPoint(activity, currentMapDrawable, editPoint);
+        if(updated != null) {
+            setCurrentMapDrawable(updated);
+        }
     }
 
     public List<MarkPoint> getMarkPointsByType(PointType type) {
@@ -66,26 +104,7 @@ public class MortarCalculatorApplication extends Application {
     public void clear() {
         currentMap = null;
         currentPointList = null;
-        currentDrawing = null;
-    }
-
-    public void setMarkPointToEdit(MarkPoint markPointToEdit) {
-        this.currentEditMarkPoint = markPointToEdit;
-    }
-
-    public MarkPoint getMarkPointToEdit() {
-        return currentEditMarkPoint;
-    }
-
-    public void deleteMarkPoint(MarkPoint editPoint) {
-        currentPointList.remove(editPoint);
-    }
-
-    public static int getMarkImageWidth() {
-        return MARK_IMAGE_WIDTH;
-    }
-
-    public static int getMarkImageHeight() {
-        return MARK_IMAGE_HEIGHT;
+        currentMapDrawable = null;
+        currentEditMarkPoint = null;
     }
 }

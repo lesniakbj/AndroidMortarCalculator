@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

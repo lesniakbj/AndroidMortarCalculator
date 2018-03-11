@@ -2,14 +2,19 @@ package com.squadfinder.brend.squadandroidcalculator.listener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Handler;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.squadfinder.brend.squadandroidcalculator.activity.AssignTargetsActivity;
 import com.squadfinder.brend.squadandroidcalculator.activity.MapDetailActivity;
 import com.squadfinder.brend.squadandroidcalculator.activity.MapDetailEditActivity;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
-import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
+import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
 
 /**
@@ -47,6 +52,23 @@ public class ImageGestureDetector extends GestureDetector.SimpleOnGestureListene
             alert.show();
         }
 
+        if(state == MapDetailActivity.MarkPointState.EDIT) {
+            Log.d("DETECTOR", "Edit state in detector");
+
+            // Do the edit
+            MortarCalculatorApplication app = (MortarCalculatorApplication) activity.getApplication();
+            MarkPoint editPoint = app.getMarkPointToEdit();
+            app.deleteMarkPoint(editPoint);
+            app.addMarkPoint(touchX, touchY, editPoint.getPointType());
+
+            // Return to the Map Detail Activity
+            Toast.makeText(activity, "Point edited, returning...", Toast.LENGTH_LONG).show();
+            new Handler().postDelayed(() -> {
+                Intent assignIntent = new Intent(activity, MapDetailActivity.class);
+                activity.startActivity(assignIntent);
+            }, Toast.LENGTH_LONG);
+        }
+
         return true;
     }
 
@@ -56,7 +78,7 @@ public class ImageGestureDetector extends GestureDetector.SimpleOnGestureListene
                 .setItems(new String[]{"Mortar", "Target"}, (dialog, which) -> {
                     MortarCalculatorApplication app = (MortarCalculatorApplication) activity.getApplication();
                     app.addMarkPoint(x, y, which == 0 ? PointType.MORTAR : PointType.TARGET);
-                    app.drawMarkPoints(activity, imageView, app.getMarkPointList());
+                    app.fillImageViewMarkPoints(activity, imageView, app.getMarkPointList());
                 }).create();
     }
 }

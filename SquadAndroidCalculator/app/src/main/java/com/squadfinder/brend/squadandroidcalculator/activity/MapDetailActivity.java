@@ -13,14 +13,14 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageGestureDetector;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageTouchListener;
 import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -28,12 +28,17 @@ import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollVi
  */
 
 public class MapDetailActivity extends Activity {
+    private Activity self;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.map_detail_layout);
+
+        // Set a self reference for later use
+        self = this;
 
         // Load the map
         MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
@@ -51,9 +56,20 @@ public class MapDetailActivity extends Activity {
         ImageView imageView = findViewById(R.id.mapImageView);
 
         // Load the Image
-        Glide.with(this).load(loadedMap.getMapImageResourceId(this))
-                .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
-                .into(imageView);
+        Picasso.get().load(loadedMap.getMapImageResourceId(this))
+            .resize(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight())
+            .into(imageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    app.setCurrentMapDrawable(imageView.getDrawable());
+                    app.fillImageViewMarkPoints(self, imageView, app.getMarkPointList());
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+            });
 
         // Setup detectors needed locally and for chaining
         GestureDetector.OnGestureListener gListener = new ImageGestureDetector(this, imageView);

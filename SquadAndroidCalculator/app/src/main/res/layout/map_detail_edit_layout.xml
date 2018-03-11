@@ -34,10 +34,17 @@
         android:orientation="vertical"
         android:padding="5dp">
         <TextView
+            android:id="@+id/mapDetailEditModeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="12sp"
+            android:textColor="@color/colorAccent"
+            android:text="@string/str_mark_edit_mode_title" />
+        <TextView
             android:id="@+id/mapDetailMapName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="2dp"
             android:shadowColor="#000000"
@@ -51,8 +58,7 @@
         <TextView
             android:id="@+id/mapDetailMapDescription"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="2dp"
             android:shadowColor="#000000"
@@ -65,8 +71,7 @@
         <TextView
             android:id="@+id/mapDetailMapDimensions"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="2dp"
             android:shadowColor="#000000"
@@ -78,16 +83,16 @@
             android:textSize="12sp" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:padding="8dp">
             <Button
                 android:id="@+id/deletePointButton"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorLightRed"
+                android:background="@color/colorLightRed"
                 android:text="@string/str_btn_delete_point"
                 tools:text="@string/str_btn_delete_point" />
         </LinearLayout>

@@ -17,6 +17,7 @@
     <string name="str_mortars"><u>Mortar Marks</u></string>
     <string name="str_targets"><u>Target Marks</u></string>
 
+    <string name="str_mark_edit_mode_title">Edit Mode</string>
     <string name="str_mark_edit_mode">You are in point edit mode, place your point to continue.</string>
 
     <string name="str_help_title">How to Use</string>
