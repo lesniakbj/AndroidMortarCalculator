@@ -1,7 +1,5 @@
 package com.squadfinder.brend.squadandroidcalculator.domain.calc;
 
-import android.util.Log;
-
 /**
  * Created by brend on 3/11/2018.
  */

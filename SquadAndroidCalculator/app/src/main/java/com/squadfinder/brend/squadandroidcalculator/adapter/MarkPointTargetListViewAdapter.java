@@ -9,12 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squadfinder.brend.squadandroidcalculator.R;
+import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
 import com.squadfinder.brend.squadandroidcalculator.listener.ListViewMarkPointDragListener;
 
+import java.text.DecimalFormat;
 import java.util.List;
-import java.util.StringJoiner;
 
 public class MarkPointTargetListViewAdapter extends ArrayAdapter<MarkPoint> {
     private Activity context;
@@ -43,24 +44,34 @@ public class MarkPointTargetListViewAdapter extends ArrayAdapter<MarkPoint> {
         }
 
         viewHolder = (MarkPointWithTargetViewHolder)rowView.getTag();
-        viewHolder.setMarkPointImageView(null);
-        viewHolder.getMarkPointGridTextView().setText(markPoints.get(i).getMapGrid());
-        if(markPoints.get(i).getPointType() == PointType.MORTAR) {
-            StringBuilder b = new StringBuilder();
-            List<MarkPoint> points = markPoints.get(i).getMappedPoints();
-            if(points != null) {
-                for (MarkPoint pt : markPoints.get(i).getMappedPoints()) {
-                    b.append(pt.getMapGrid()).append(", ");
-                }
-                b.setLength(b.length() - 2);
-                viewHolder.getMarkPointMappedPointsTextView().setText(String.format("Targets: %s", b.toString()));
-            } else {
-                viewHolder.getMarkPointMappedPointsTextView().setText(R.string.str_no_mapped_targets);
-            }
+
+        MarkPoint currentPoint = markPoints.get(i);
+        viewHolder.getMarkPointImageView().setImageDrawable(currentPoint.getMarkSnapshot());
+        viewHolder.getMarkPointGridTextView().setText(currentPoint.getMapGrid());
+        if(currentPoint.getPointType() == PointType.MORTAR) {
+            viewHolder.getMarkPointMappedPointsTextView().setText(buildTargetText(currentPoint));
         }
 
-        rowView.setOnDragListener(new ListViewMarkPointDragListener(context, markPoints.get(i)));
+        rowView.setOnDragListener(new ListViewMarkPointDragListener(context, currentPoint));
         return rowView;
+    }
+
+    private String buildTargetText(MarkPoint currentPoint) {
+        MortarCalculatorApplication app = (MortarCalculatorApplication) context.getApplication();
+        StringBuilder b = new StringBuilder();
+        List<MarkPoint> points = currentPoint.getMappedPoints();
+        DecimalFormat df = new DecimalFormat("#.00");
+        if(points != null) {
+            for (MarkPoint pt : currentPoint.getMappedPoints()) {
+                b.append(pt.getMapGrid())
+                        .append(", Distance: ")
+                        .append(df.format(app.getDistanceBetweenMarkPoints(currentPoint, pt)))
+                        .append("m\n");
+            }
+        } else {
+            b.append(context.getResources().getString(R.string.str_no_mapped_targets));
+        }
+        return b.toString();
     }
 
     private static class MarkPointWithTargetViewHolder {

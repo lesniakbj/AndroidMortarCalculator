@@ -2,10 +2,8 @@ package com.squadfinder.brend.squadandroidcalculator.listener;
 
 import android.app.Activity;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 

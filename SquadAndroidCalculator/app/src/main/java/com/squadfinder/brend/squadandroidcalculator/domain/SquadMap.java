@@ -21,7 +21,7 @@ public class SquadMap implements Parcelable {
     private String mapImage;
     private int mapWidth;
     private int mapHeight;
-    private double mapScalePixesPerMeter;
+    private double mapScalePixelsPerMeter;
     private List<Layer> layerList;
 
     /**
@@ -35,7 +35,7 @@ public class SquadMap implements Parcelable {
         mapImage = in.readString();
         mapWidth = in.readInt();
         mapHeight = in.readInt();
-        mapScalePixesPerMeter = in.readDouble();
+        mapScalePixelsPerMeter = in.readDouble();
     }
 
     public int getId() {
@@ -110,12 +110,12 @@ public class SquadMap implements Parcelable {
         this.mapArea = mapArea;
     }
 
-    public double getMapScalePixesPerMeter() {
-        return mapScalePixesPerMeter;
+    public double getMapScalePixelsPerMeter() {
+        return mapScalePixelsPerMeter;
     }
 
-    public void setMapScalePixesPerMeter(double mapScalePixesPerMeter) {
-        this.mapScalePixesPerMeter = mapScalePixesPerMeter;
+    public void setMapScalePixelsPerMeter(double mapScalePixelsPerMeter) {
+        this.mapScalePixelsPerMeter = mapScalePixelsPerMeter;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class SquadMap implements Parcelable {
                 ", mapImage='" + mapImage + '\'' +
                 ", mapWidth=" + mapWidth +
                 ", mapHeight=" + mapHeight +
-                ", mapScalePixesPerMeters=" + mapScalePixesPerMeter +
+                ", mapScalePixesPerMeters=" + mapScalePixelsPerMeter +
                 ", layerList=" + layerList +
                 '}';
     }
@@ -158,7 +158,7 @@ public class SquadMap implements Parcelable {
         dest.writeString(mapImage);
         dest.writeInt(mapWidth);
         dest.writeInt(mapHeight);
-        dest.writeDouble(mapScalePixesPerMeter);
+        dest.writeDouble(mapScalePixelsPerMeter);
     }
 
     public static final Creator<SquadMap> CREATOR = new Creator<SquadMap>() {

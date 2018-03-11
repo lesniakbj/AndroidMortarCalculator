@@ -43,8 +43,10 @@ public class MarkPointListViewAdapter extends ArrayAdapter<MarkPoint> {
         }
 
         viewHolder = (MarkPointViewHolder)rowView.getTag();
-        viewHolder.setMarkPointImageView(null);
-        viewHolder.getMarkPointGridTextView().setText(markPoints.get(i).getMapGrid());
+
+        MarkPoint currentPoint = markPoints.get(i);
+        viewHolder.getMarkPointImageView().setImageDrawable(currentPoint.getMarkSnapshot());
+        viewHolder.getMarkPointGridTextView().setText(currentPoint.getMapGrid());
         return rowView;
     }
 

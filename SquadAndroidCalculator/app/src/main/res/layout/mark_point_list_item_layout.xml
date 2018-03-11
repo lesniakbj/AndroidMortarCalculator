@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/markPointGridTextView"
             android:layout_width="match_parent"
-            android:layout_height="27dp"
+            android:layout_height="wrap_content"
             android:padding="2dp"
             android:shadowColor="#000000"
             android:shadowDx="1.5"

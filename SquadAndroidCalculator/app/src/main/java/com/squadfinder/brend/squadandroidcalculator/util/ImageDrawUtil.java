@@ -42,7 +42,9 @@ public class ImageDrawUtil {
             // Add points to the canvas
             Canvas c = new Canvas(mutable);
             for (int i = 0; i < points.size(); i++) {
-                drawSinglePoint(context, c, points.get(i));
+                MarkPoint p = points.get(i);
+                drawSinglePoint(context, c, p);
+                addSnapshotImage(context, mutable, p);
             }
 
             // Set our image view to the mutated bitmap
@@ -53,20 +55,28 @@ public class ImageDrawUtil {
         return null;
     }
 
+    private static void addSnapshotImage(Activity context, Bitmap bitmap, MarkPoint p) {
+        if(p.getMarkSnapshot() == null) {
+            float offX = p.getPointCoordinates().x;
+            float offY = p.getPointCoordinates().y;
+            final int PAD = 75;
+
+            Bitmap snap = Bitmap.createBitmap(bitmap, (int)(offX - PAD), (int)(offY - PAD), PAD * 2, PAD * 2);
+            p.setMarkSnapshot(new BitmapDrawable(context.getResources(), snap));
+        }
+    }
+
     private static void drawSinglePoint(Activity context, Canvas c, MarkPoint point) {
         PointF p = point.getPointCoordinates();
         RectF rect = new RectF(p.x - POINT_WIDTH, p.y - POINT_WIDTH, p.x + POINT_WIDTH, p.y + POINT_WIDTH);
         Paint basePaint = getPaintForPoint(context, point);
         c.drawRect(rect, basePaint);
-        // c.drawText(Integer.toString(i), p.x + 20, p.y + 20, basePaint);
 
         Paint outline = new Paint();
         outline.setStyle(Paint.Style.STROKE);
         outline.setColor(Color.BLACK);
         outline.setStrokeWidth(2);
-
         c.drawRect(rect, outline);
-        // c.drawText(Integer.toString(i), p.x + 20, p.y + 20, outline);
     }
 
     public static Drawable circleMarkPoint(Activity context, Drawable drawable, MarkPoint point) {
@@ -97,7 +107,7 @@ public class ImageDrawUtil {
 
     private static Paint getPaintForPoint(Activity context, MarkPoint point) {
         Paint basePaint = new Paint();
-        basePaint.setColor(point.getPointType() == PointType.MORTAR ? ContextCompat.getColor(context, R.color.colorLightGreen) : ContextCompat.getColor(context, R.color.colorLightRed));
+        basePaint.setColor(point.getPointType() == PointType.MORTAR ? context.getResources().getColor(R.color.colorLightGreen) : context.getResources().getColor(R.color.colorLightRed));
         basePaint.setStyle(Paint.Style.FILL);
         basePaint.setAntiAlias(true);
         basePaint.setStrokeWidth(4);
@@ -151,5 +161,38 @@ public class ImageDrawUtil {
             curMinor += minorGridDistancePx;
             iter++;
         }
+    }
+
+    public static Drawable connectMarkPoints(Activity context, Drawable drawable, List<MarkPoint> markPoints) {
+        // Get the bitmap
+        BitmapDrawable bd = (BitmapDrawable)drawable;
+        if(bd != null) {
+            Bitmap bitmap = bd.getBitmap();
+
+            // Create our working and mutable bitmaps
+            Bitmap working = Bitmap.createBitmap(bitmap);
+            Bitmap mutable = working.copy(Bitmap.Config.ARGB_8888, true);
+
+            Canvas c = new Canvas(mutable);
+            for (int i = 0; i < markPoints.size(); i++) {
+                MarkPoint p = markPoints.get(i);
+                List<MarkPoint> mpList = p.getMappedPoints();
+                if(mpList != null) {
+                    for(MarkPoint p2 : mpList) {
+                        drawPointConnection(context, c, p, p2);
+                    }
+                }
+            }
+
+            return new BitmapDrawable(context.getResources(), mutable);
+        }
+
+        return null;
+    }
+
+    private static void drawPointConnection(Activity context, Canvas c, MarkPoint p1, MarkPoint p2) {
+        Paint p = getPaintForPoint(context, p1);
+        p.setColor(context.getResources().getColor(R.color.colorLightGreenTransparent));
+        c.drawLine(p1.getPointCoordinates().x, p1.getPointCoordinates().y, p2.getPointCoordinates().x, p2.getPointCoordinates().y, p);
     }
 }

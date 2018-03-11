@@ -2,8 +2,6 @@ package com.squadfinder.brend.squadandroidcalculator.application;
 
 import android.app.Activity;
 import android.app.Application;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -53,10 +51,10 @@ public class MortarCalculatorApplication extends Application {
             currentMarkPointId = 1;
         }
         MarkPoint mp = new MarkPoint(currentMarkPointId, x, y, pointType);
-        String gridX = MapGridUtil.getHorizontalGridMajor(currentMap.getMapScalePixesPerMeter(), x);
-        String gridY = MapGridUtil.getVerticalGridMajor(currentMap.getMapScalePixesPerMeter(), y);
-        String gridKeypad = MapGridUtil.getGridKeypad(currentMap.getMapScalePixesPerMeter(), x, y);
-        String gridSubKeypadKeypad = MapGridUtil.getGridSubKeypad(currentMap.getMapScalePixesPerMeter(), x, y);
+        String gridX = MapGridUtil.getHorizontalGridMajor(currentMap.getMapScalePixelsPerMeter(), x);
+        String gridY = MapGridUtil.getVerticalGridMajor(currentMap.getMapScalePixelsPerMeter(), y);
+        String gridKeypad = MapGridUtil.getGridKeypad(currentMap.getMapScalePixelsPerMeter(), x, y);
+        String gridSubKeypadKeypad = MapGridUtil.getGridSubKeypad(currentMap.getMapScalePixelsPerMeter(), x, y);
         mp.setMapGrid(gridX + gridY + " - " + gridKeypad + " - " + gridSubKeypadKeypad);
         Log.d("APPLICATION", String.format("Grid: %s", mp.getMapGrid()));
         currentPointList.add(mp);
@@ -190,13 +188,34 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void addGridLinesToMap(Activity activity) {
-        double scale = currentMap.getMapScalePixesPerMeter();
+        double scale = currentMap.getMapScalePixelsPerMeter();
         double majorGridDistancePx = MapGridUtil.getMajorGridPixelDistance(scale);
         double minorGridDistancePx = MapGridUtil.getMinorGridPixelDistanceFromMajorGridPixelScale(majorGridDistancePx);
 
-        Drawable updated = ImageDrawUtil.fillImageViewGridLines(activity, currentMapDrawable, majorGridDistancePx, minorGridDistancePx, currentMap.getMapWidth(), currentMap.getMapHeight());
+        Drawable updated = ImageDrawUtil.fillImageViewGridLines(activity, currentMapDrawable, majorGridDistancePx, minorGridDistancePx, MARK_IMAGE_WIDTH, MARK_IMAGE_HEIGHT);
         if(updated != null) {
             setCurrentMapDrawable(activity, updated);
+        }
+    }
+
+    public double getDistanceBetweenMarkPoints(MarkPoint currentPoint, MarkPoint pt) {
+        double dX = currentPoint.getPointCoordinates().x - pt.getPointCoordinates().x;
+        double dY = currentPoint.getPointCoordinates().y - pt.getPointCoordinates().y;
+        double pxDist = Math.hypot(dX, dY);
+        return pxDist / currentMap.getMapScalePixelsPerMeter();
+    }
+
+    public void connectMarkPoints(Activity context) {
+        Drawable updated = ImageDrawUtil.connectMarkPoints(context, currentMapDrawable, getMarkPointsByType(PointType.MORTAR));
+        if(updated != null) {
+            setCurrentMapDrawable(context, updated);
+        }
+    }
+
+    public void removeAllMarkedAssignments() {
+        targetMappings = null;
+        for(MarkPoint mp : currentPointList) {
+            mp.setMappedPoints(null);
         }
     }
 }

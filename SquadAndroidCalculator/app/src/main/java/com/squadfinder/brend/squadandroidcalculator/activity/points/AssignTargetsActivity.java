@@ -1,14 +1,18 @@
 package com.squadfinder.brend.squadandroidcalculator.activity.points;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.activity.base.BaseActivity;
+import com.squadfinder.brend.squadandroidcalculator.activity.map.MapCalculatedActivity;
 import com.squadfinder.brend.squadandroidcalculator.adapter.MarkPointTargetListViewAdapter;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
@@ -49,6 +53,22 @@ public class AssignTargetsActivity extends BaseActivity {
         // Load targets
         MaxHeightListView targetListView = findViewById(R.id.targetMarkListView);
         loadListView(app, targetListView, PointType.TARGET);
+
+        // Button Assignments
+        Button confirmAssignmentButton = findViewById(R.id.confirmAssignButton);
+        confirmAssignmentButton.setOnClickListener(v -> {
+            Log.d("ACTIVITY", "Start new intent for Edit");
+            Intent calulateActivity = new Intent(this, MapCalculatedActivity.class);
+            this.startActivity(calulateActivity);
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
+        app.removeAllMarkedAssignments();
     }
 
     private void loadListView(MortarCalculatorApplication app, MaxHeightListView listView, PointType type) {

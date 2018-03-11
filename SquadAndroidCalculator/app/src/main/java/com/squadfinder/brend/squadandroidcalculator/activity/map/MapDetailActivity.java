@@ -67,6 +67,8 @@ public class MapDetailActivity extends Activity {
                 public void onSuccess() {
                     app.setCurrentMapDrawable(self, imageView.getDrawable());
                     app.fillImageViewMarkPoints(self, imageView, app.getMarkPointList());
+
+                    // I need something that can reload the drawable... this is ugly as... well you know...
                     Glide.with(self).load(app.getCurrentMapDrawable())
                             .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
                             .into(imageView);
@@ -108,10 +110,10 @@ public class MapDetailActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         // Clear saved points if we back out of the activity
         MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
         app.clear();
-        finish();
     }
 
     public enum MarkPointState {
