@@ -4,8 +4,9 @@
     "mapName": "Belaya",
     "mapArea": "",
     "mapDescription": "Belaya is set in a Winter landscape with many hills covered in dense forests, several village and factories spaced out across the map.",
-    "mapWidth": 3900,
-    "mapHeight": 3900,
+    "mapWidth": 3904,
+    "mapHeight": 3905,
+    "mapScalePixesPerMeter": 1.049180327868852,
     "layerList": []
   },
   {
@@ -13,8 +14,9 @@
     "mapName": "Fool's Road",
     "mapArea": "",
     "mapDescription": "Fool's Road is set in an Eastern European map, with large, expansive terrain covered in dense forests with buildings spaced out across the map.",
-    "mapWidth": 1760,
-    "mapHeight": 1760,
+    "mapWidth": 1736,
+    "mapHeight": 1774,
+    "mapScalePixelsPerMeter": 2.359718861620002,
     "layerList": []
   },
   {
@@ -22,9 +24,9 @@
     "mapName": "Gorodok",
     "mapArea": "",
     "mapDescription": "Gorodok is an Eastern European map, with large expansive terrain.",
-
     "mapWidth": 4340,
     "mapHeight": 4340,
+    "mapScalePixelsPerMeter": 0.943778801843318,
     "layerList": []
   },
   {
@@ -34,6 +36,7 @@
     "mapDescription": "Mestia is set in a Georgian landscape, with large, expansive terrain covered in dense forests with buildings, valleys and hills spaced out across the map.",
     "mapWidth": 2400,
     "mapHeight": 2400,
+    "mapScalePixelsPerMeter": 1.706666666666667,
     "layerList": []
   },
   {
@@ -41,8 +44,9 @@
     "mapName": "Narva",
     "mapArea": "",
     "mapDescription": "Narva consists of a large city situated on the Narva River in the Republic of Estonia. The city has a large castle, a railway yard, large avenues and boulevards, towering blocks, and a city center.",
-    "mapWidth": 2200,
-    "mapHeight": 2200,
+    "mapWidth": 2800,
+    "mapHeight": 2800,
+    "mapScalePixelsPerMeter": 1.462857142857143,
     "layerList": []
   },
   {
@@ -50,8 +54,9 @@
     "mapName": "Operation First Light",
     "mapArea": "",
     "mapDescription": " Operation First Light is set in an Eastern European map, with terrain covered in dense forests and fog. This map is mostly infantry based combat. The limited vehicles in play serve only to supply FOBs or provide limited fire support as the dense forests limit their effectiveness and allow them to be ambushed from any side. There are, however, a few places where a well positioned vehicle can slaughter Infantry that are not careful. The map is not so large as to necessitate the use of vehicles for transportation. The fighting consists mostly of close-quarters or mid-range firefights in the urban areas or in the forests.",
-    "mapWidth": 1430,
-    "mapHeight": 1430,
+    "mapWidth": 1200,
+    "mapHeight": 1200,
+    "mapScalePixelsPerMeter": 3.413333333333333,
     "layerList": []
   },
   {
@@ -59,9 +64,9 @@
     "mapName": "Yehorivka",
     "mapArea": "",
     "mapDescription": "Yehorivka is an Eastern European map, with large terrain, two highways, and two center villages. It was updated in Alpha v9. The map is characterized by large open plains, patches of forest, some scattered villages, and an industrial storage sight roughly in the center of the map. This map provides an excellent opportunity to engage in true mechanized warfare, with vehicle transportation being absolutely essential due to the maps size and lack of cover in certain areas. It is common to see small 3-man APC squads on this map, hunting enemy vehicles and supporting infantry assaults.",
-
-    "mapWidth": 4180,
-    "mapHeight": 4180,
+    "mapWidth": 4034,
+    "mapHeight": 4034,
+    "mapScalePixelsPerMeter": 1.015369360436292,
     "layerList": []
   },
   {
@@ -69,27 +74,29 @@
     "mapName": "Chora",
     "mapArea": "",
     "mapDescription": "Chora, formerly known as Chora Green Zone, is set in a large river valley located near Kabul, Afghanistan, consisting of mud brick compounds and large green fields surrounded by low walls. This map can be somewhat claustrophobic to play on. The mud brick compounds and walls cover the entire area, forcing vehicles to stick to the roads and pathways lest they become flipped or stuck on something.",
-    "mapWidth": 3850,
-    "mapHeight": 3850,
-    "mapScalePixesToMeters": 0.4682275,
+    "mapWidth": 4064,
+    "mapHeight": 4064,
+    "mapScalePixesPerMeter": 1.007898816407884,
     "layerList": []
   },
   {
-  "mapId": 9,
-  "mapName": "Kohat Toi",
-  "mapArea": "",
-  "mapDescription": "Kohat Toi is set in a large river valley in Pakistan, consisting of large rigid hills and small rural communities.",
-  "mapWidth": 3960,
-  "mapHeight": 3960,
-  "layerList": []
+    "mapId": 9,
+    "mapName": "Kohat Toi",
+    "mapArea": "",
+    "mapDescription": "Kohat Toi is set in a large river valley in Pakistan, consisting of large rigid hills and small rural communities.",
+    "mapWidth": 4017,
+    "mapHeight": 4017,
+    "mapScalePixesPerMeter": 1.01966641772467,
+    "layerList": []
   },
   {
     "mapId": 10,
     "mapName": "Kokan",
     "mapArea": "",
     "mapDescription": "Kokan consists of a series of hamlets and villages separated by large areas of green and farmland.",
-    "mapWidth": 2530,
-    "mapHeight": 2530,
+    "mapWidth": 2496,
+    "mapHeight": 2495,
+    "mapScalePixesPerMeter": 1.641157144001923,
     "layerList": []
   },
   {
@@ -97,17 +104,19 @@
     "mapName": "Logar Valley",
     "mapArea": "",
     "mapDescription": "Logar Valley is set in three rural communities inside a valley in Afghanistan, with tall hills setting them apart.",
-    "mapWidth": 1760,
-    "mapHeight": 1760,
+    "mapWidth": 1761,
+    "mapHeight": 1762,
+    "mapScalePixesPerMeter": 2.325687031569385,
     "layerList": []
   },
-    {
+  {
     "mapId": 12,
     "mapName": "Sumari Bala",
     "mapArea": "",
     "mapDescription": "Sumari Bala is set in a large, clustered village in the Islamic Republic of Pakistan cut by a river and surrounded by farmland. The map is mostly close quarters engagment with firefights across city streets, back alleys, and the open fields to the north and south. Larger vehicles tend not to last long in the claustrophobic town, but this is also where the Technical excels, darting down streets and through fields to hit and then flee, with ample buildings to provide cover for a getaway.",
-    "mapWidth": 1320,
-    "mapHeight": 1320,
+    "mapWidth": 1300,
+    "mapHeight": 1300,
+    "mapScalePixelsPerMeter": 3.150526882547496,
     "layerList": []
   },
   {
@@ -115,8 +124,19 @@
     "mapName": "Al Basrah",
     "mapArea": "",
     "mapDescription": "Al Basrah consists of a city in the Republic of Iraq along the Shatt al-Arab River with the Qamat Ali Canal splitting off from it leading to a nearby village.",
-    "mapWidth": 1320,
-    "mapHeight": 1320,
+    "mapWidth": 3200,
+    "mapHeight": 3200,
+    "mapScalePixelsPerMeter": 1.28,
+    "layerList": []
+  },
+  {
+    "mapId": 13,
+    "mapName": "Jensen's Range",
+    "mapArea": "",
+    "mapDescription": "x",
+    "mapWidth": 1510,
+    "mapHeight": 1510,
+    "mapScalePixelsPerMeter": 2.712762434598318,
     "layerList": []
   }
 ]

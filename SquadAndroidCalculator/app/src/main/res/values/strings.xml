@@ -8,6 +8,7 @@
     <string name="str_calc_detail_title">Set mortar parameters using the map</string>
 
     <string name="str_btn_edit_points">Edit Points</string>
+    <string name="str_btn_delete_point">Delete Point</string>
     <string name="str_btn_assing_targets">Assign Targets</string>
 
     <string name="str_ok">OK</string>
@@ -15,6 +16,8 @@
 
     <string name="str_mortars"><u>Mortar Marks</u></string>
     <string name="str_targets"><u>Target Marks</u></string>
+
+    <string name="str_mark_edit_mode">You are in point edit mode, place your point to continue.</string>
 
     <string name="str_help_title">How to Use</string>
     <string name="str_help">

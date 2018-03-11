@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide;
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 
+import java.util.List;
+
 /**
  *
  * Created by brend on 3/6/2018.
@@ -19,9 +21,9 @@ import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 
 public class SquadMapListViewAdapter extends ArrayAdapter<SquadMap> {
     private final Activity context;
-    private final SquadMap[] maps;
+    private final List<SquadMap> maps;
 
-    public SquadMapListViewAdapter(Activity context, SquadMap[] maps) {
+    public SquadMapListViewAdapter(Activity context, List<SquadMap> maps) {
         super(context, -1, maps);
         this.context = context;
         this.maps = maps;
@@ -35,7 +37,7 @@ public class SquadMapListViewAdapter extends ArrayAdapter<SquadMap> {
         if(rowView == null) {
             viewHolder = new MapViewHolder();
 
-            rowView = context.getLayoutInflater().inflate(R.layout.scroll_view_item, null);
+            rowView = context.getLayoutInflater().inflate(R.layout.map_selection_list_item_layout, null);
             viewHolder.setMapImage(rowView.findViewById(R.id.scrollViewMapImage));
             viewHolder.setMapTitle(rowView.findViewById(R.id.scrollViewMapName));
             viewHolder.setMapDescription(rowView.findViewById(R.id.scrollViewMapDescription));
@@ -44,11 +46,11 @@ public class SquadMapListViewAdapter extends ArrayAdapter<SquadMap> {
         }
 
         viewHolder = (MapViewHolder)rowView.getTag();
-        viewHolder.getMapTitle().setText(maps[i].getMapName());
-        viewHolder.getMapDescription().setText(maps[i].getMapDescription());
+        SquadMap map = maps.get(i);
 
-        // Load the image
-        Glide.with(context).load(maps[i].getMapImageResourceId(context)).into(viewHolder.getMapImage());
+        viewHolder.getMapTitle().setText(map.getMapName());
+        viewHolder.getMapDescription().setText(map.getMapDescription());
+        Glide.with(context).load(map.getMapImageResourceId(context)).into(viewHolder.getMapImage());
         return rowView;
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,9 +14,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.squadfinder.brend.squadandroidcalculator.R;
+import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
-import com.squadfinder.brend.squadandroidcalculator.domain.calc.PointManager;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageGestureDetector;
 import com.squadfinder.brend.squadandroidcalculator.listener.ImageTouchListener;
 import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView;
@@ -26,7 +28,6 @@ import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollVi
  */
 
 public class MapDetailActivity extends Activity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,13 +35,9 @@ public class MapDetailActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.map_detail_layout);
 
-        // Make sure we loaded this activity correctly
-        SquadMap loadedMap = (SquadMap)getIntent().getSerializableExtra("map");
-        if(loadedMap == null) {
-            Log.e("ACTIVITY", "Error switching to Map Detail View");
-            finish();
-            return;
-        }
+        // Load the map
+        MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
+        SquadMap loadedMap = app.getCurrentMap();
 
         // Load the Map String Data
         TextView mapName = findViewById(R.id.mapDetailMapName);
@@ -54,10 +51,17 @@ public class MapDetailActivity extends Activity {
         ImageView imageView = findViewById(R.id.mapImageView);
 
         // Load the Image
-        Glide.with(this).load(loadedMap.getMapImageResourceId(this)).into(imageView);
+        Glide.with(this).load(loadedMap.getMapImageResourceId(this))
+                .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
+                .into(imageView);
 
         // Setup detectors needed locally and for chaining
-        imageView.setOnTouchListener(new ImageTouchListener(new GestureDetector(this, new ImageGestureDetector(this, imageView, loadedMap.getMapScalePixesToMeters()))));
+        GestureDetector.OnGestureListener gListener = new ImageGestureDetector(this, imageView);
+        GestureDetector gDetector = new GestureDetector(this, gListener);
+        View.OnTouchListener tListener = new ImageTouchListener(gDetector);
+        imageView.setOnTouchListener(tListener);
+
+        // Setup the Scroll View for the image
         OuterHorizontalScrollView hScrollView = findViewById(R.id.mapHorizontalScroll);
         ScrollView vScrollView = findViewById(R.id.mapVerticalScroll);
         hScrollView.setScrollView(vScrollView);
@@ -82,7 +86,13 @@ public class MapDetailActivity extends Activity {
     @Override
     public void onBackPressed() {
         // Clear saved points if we back out of the activity
-        PointManager.getInstance().clearPoints();
+        MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
+        app.clear();
         finish();
+    }
+
+    public enum MarkPointState {
+        CREATE,
+        EDIT;
     }
 }

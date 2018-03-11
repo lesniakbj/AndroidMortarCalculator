@@ -23,10 +23,6 @@ public class MaxHeightListView extends ListView {
         super(context, attrs, defStyleAttr);
     }
 
-    public MaxHeightListView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     public int getMaxHeight() {
         return maxHeight;
     }

@@ -1,10 +1,11 @@
 package com.squadfinder.brend.squadandroidcalculator.domain;
 
 import android.app.Activity;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.MapArea;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by brend on 3/6/2018.
  */
 
-public class SquadMap implements Serializable {
+public class SquadMap implements Parcelable {
     private int mapId;
     private String mapName;
     private MapArea mapArea;
@@ -20,8 +21,22 @@ public class SquadMap implements Serializable {
     private String mapImage;
     private int mapWidth;
     private int mapHeight;
-    private float mapScalePixesToMeters;
+    private double mapScalePixesPerMeter;
     private List<Layer> layerList;
+
+    /**
+     * Parcel Constructor
+     * @param in Parcel
+     */
+    private SquadMap(Parcel in) {
+        mapId = in.readInt();
+        mapName = in.readString();
+        mapDescription = in.readString();
+        mapImage = in.readString();
+        mapWidth = in.readInt();
+        mapHeight = in.readInt();
+        mapScalePixesPerMeter = in.readDouble();
+    }
 
     public int getId() {
         return mapId;
@@ -95,12 +110,12 @@ public class SquadMap implements Serializable {
         this.mapArea = mapArea;
     }
 
-    public float getMapScalePixesToMeters() {
-        return mapScalePixesToMeters;
+    public double getMapScalePixesPerMeter() {
+        return mapScalePixesPerMeter;
     }
 
-    public void setMapScalePixesToMeters(float mapScalePixesToMeters) {
-        this.mapScalePixesToMeters = mapScalePixesToMeters;
+    public void setMapScalePixesPerMeter(double mapScalePixesPerMeter) {
+        this.mapScalePixesPerMeter = mapScalePixesPerMeter;
     }
 
     @Override
@@ -113,7 +128,7 @@ public class SquadMap implements Serializable {
                 ", mapImage='" + mapImage + '\'' +
                 ", mapWidth=" + mapWidth +
                 ", mapHeight=" + mapHeight +
-                ", mapScalePixesToMeters=" + mapScalePixesToMeters +
+                ", mapScalePixesPerMeters=" + mapScalePixesPerMeter +
                 ", layerList=" + layerList +
                 '}';
     }
@@ -126,4 +141,35 @@ public class SquadMap implements Serializable {
     public String getDimensionString() {
         return Integer.toString(getMapWidth()) + "m x " + Integer.toString(getMapHeight()) + "m";
     }
+
+    // ==============================
+    //      PARCELABLE IMP
+    // ==============================
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mapId);
+        dest.writeString(mapName);
+        dest.writeString(mapDescription);
+        dest.writeString(mapImage);
+        dest.writeInt(mapWidth);
+        dest.writeInt(mapHeight);
+        dest.writeDouble(mapScalePixesPerMeter);
+    }
+
+    public static final Creator<SquadMap> CREATOR = new Creator<SquadMap>() {
+        @Override
+        public SquadMap createFromParcel(Parcel in) {
+            return new SquadMap(in);
+        }
+
+        @Override
+        public SquadMap[] newArray(int size) {
+            return new SquadMap[size];
+        }
+    };
 }

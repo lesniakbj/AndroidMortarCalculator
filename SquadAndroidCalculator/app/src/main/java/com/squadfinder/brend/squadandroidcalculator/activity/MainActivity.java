@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.adapter.SquadMapListViewAdapter;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
@@ -24,6 +25,8 @@ import com.squadfinder.brend.squadandroidcalculator.util.RawResourceLoader;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class MainActivity extends BaseActivity {
 
     @Override
@@ -31,7 +34,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_layout);
 
         // Load Map Data
         ProgressDialog pDialog = new ProgressDialog(this);
@@ -39,12 +42,12 @@ public class MainActivity extends BaseActivity {
         pDialog.show();
         simpleGetWebJSON("", (JSONObject json) -> {
             Log.d("JSON_REQUEST", String.format("Got JSON: %s", json.toString()));
-            addScrollViewContent(this, new Gson().fromJson(json.toString(), SquadMap[].class));
+            addScrollViewContent(this, new Gson().fromJson(json.toString(), new TypeToken<List<SquadMap>>(){}.getType()));
             pDialog.dismiss();
         }, (VolleyError error) -> {
             Log.d("JSON_REQUEST", String.format("Error: %s", error.toString()));
             String json = RawResourceLoader.readRawResourceAsString(getResources().openRawResource(R.raw.maps_default));
-            addScrollViewContent(this, new Gson().fromJson(json, SquadMap[].class));
+            addScrollViewContent(this, new Gson().fromJson(json, new TypeToken<List<SquadMap>>(){}.getType()));
             pDialog.dismiss();
         });
 
@@ -70,7 +73,7 @@ public class MainActivity extends BaseActivity {
                 .create();
     }
 
-    private void addScrollViewContent(Activity context, SquadMap[] maps) {
+    private void addScrollViewContent(Activity context, List<SquadMap> maps) {
         ArrayAdapter<SquadMap> mapAdapter = new SquadMapListViewAdapter(this, maps);
         ListView mapList = context.findViewById(R.id.mapListView);
         mapList.setAdapter(mapAdapter);
