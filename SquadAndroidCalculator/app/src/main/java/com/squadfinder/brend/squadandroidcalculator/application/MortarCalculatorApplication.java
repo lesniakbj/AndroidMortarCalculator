@@ -34,6 +34,9 @@ public class MortarCalculatorApplication extends Application {
     private static ArrayAdapter<MarkPoint> mortarArrayAdapter;
     private static ArrayAdapter<MarkPoint> targetArrayAdapter;
 
+    // For Dragging
+    private static MarkPoint draggedMarkPoint;
+
     private static final int MARK_IMAGE_WIDTH = 2048;
     private static final int MARK_IMAGE_HEIGHT = 2048;
 
@@ -147,6 +150,10 @@ public class MortarCalculatorApplication extends Application {
             return false;
         }
 
+        if(getDistanceBetweenMarkPoints(mortarMark, targetMark) > getMaxMortarDistance()) {
+            return false;
+        }
+
         List<MarkPoint> currentTargets;
         if(targetMappings.containsKey(mortarMark)) {
             currentTargets = targetMappings.get(mortarMark);
@@ -217,5 +224,27 @@ public class MortarCalculatorApplication extends Application {
         for(MarkPoint mp : currentPointList) {
             mp.setMappedPoints(null);
         }
+    }
+
+    public void setDraggedMarkPoint(MarkPoint draggedMarkPoint) {
+        MortarCalculatorApplication.draggedMarkPoint = draggedMarkPoint;
+    }
+
+    public MarkPoint getDraggedMarkPoint() {
+        return draggedMarkPoint;
+    }
+
+    public double getMaxMortarDistance() {
+        return 1300.0;
+    }
+
+    public double getAngleBetweenPoints(MarkPoint mortar, MarkPoint target) {
+        float dY = target.getPointCoordinates().y - mortar.getPointCoordinates().y;
+        float dX = target.getPointCoordinates().x - mortar.getPointCoordinates().x;
+        double angle = Math.atan2(dY, dX);
+        double degAngle = Math.toDegrees(angle) + 90;
+        degAngle = (degAngle > 0) ? degAngle : degAngle + 360;
+        Log.d("ACTIVITY", String.format("Angle: %f", degAngle));
+        return degAngle;
     }
 }

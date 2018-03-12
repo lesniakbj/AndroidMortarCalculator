@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
+
     <com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView
         android:id="@+id/mapHorizontalScroll"
         android:layout_width="wrap_content"
@@ -23,14 +24,34 @@
                 android:layout_marginRight="10dp" />
         </ScrollView>
     </com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView>
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:background="@drawable/top_border"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mortarCalcTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:shadowColor="#000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.3"
+            android:shadowRadius="1.6"
+            android:text="@string/str_calc_title"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+        <ListView
+            android:id="@+id/mortarCalcMortarList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </LinearLayout>

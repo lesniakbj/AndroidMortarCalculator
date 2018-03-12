@@ -7,6 +7,7 @@ import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
 
 /**
@@ -24,6 +25,8 @@ public class ListViewMarkPointLongClickListener implements AdapterView.OnItemLon
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         // Build the drag data
         MarkPoint markPointToDrag = (MarkPoint)parent.getItemAtPosition(position);
+        MortarCalculatorApplication app = (MortarCalculatorApplication) activity.getApplication();
+        app.setDraggedMarkPoint(markPointToDrag);
         String markPointId = markPointToDrag.getId().toString();
         ClipData.Item item = new ClipData.Item(markPointId);
         ClipData data = new ClipData(markPointId, new String[]{ ClipDescription.MIMETYPE_TEXT_PLAIN }, item);

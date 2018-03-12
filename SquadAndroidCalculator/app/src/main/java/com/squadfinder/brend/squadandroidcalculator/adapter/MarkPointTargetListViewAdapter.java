@@ -62,11 +62,11 @@ public class MarkPointTargetListViewAdapter extends ArrayAdapter<MarkPoint> {
         List<MarkPoint> points = currentPoint.getMappedPoints();
         DecimalFormat df = new DecimalFormat("#.00");
         if(points != null) {
+            String prefix = "";
             for (MarkPoint pt : currentPoint.getMappedPoints()) {
-                b.append(pt.getMapGrid())
-                        .append(", Distance: ")
-                        .append(df.format(app.getDistanceBetweenMarkPoints(currentPoint, pt)))
-                        .append("m\n");
+                b.append(prefix).append(pt.getMapGrid()).append(", Distance: ")
+                        .append(df.format(app.getDistanceBetweenMarkPoints(currentPoint, pt))).append("m");
+                prefix = "\n";
             }
         } else {
             b.append(context.getResources().getString(R.string.str_no_mapped_targets));

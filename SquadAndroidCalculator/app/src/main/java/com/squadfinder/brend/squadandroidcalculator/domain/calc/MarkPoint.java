@@ -27,6 +27,9 @@ public class MarkPoint implements Parcelable {
         this.id = id;
         this.pointCoordinates = new PointF(x, y);
         this.pointType = pointType;
+        this.mappedPoints = new ArrayList<>();
+        this.mapGrid = "";
+        this.markSnapshot = null;
     }
 
     protected MarkPoint(Parcel in) {
