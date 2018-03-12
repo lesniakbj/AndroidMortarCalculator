@@ -2,7 +2,6 @@ package com.squadfinder.brend.squadandroidcalculator.listener;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.DragEvent;

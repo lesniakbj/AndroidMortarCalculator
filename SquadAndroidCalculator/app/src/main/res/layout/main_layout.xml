@@ -71,7 +71,7 @@
 
     </ListView>
 
-    <ImageView
+    <com.squadfinder.brend.squadandroidcalculator.view.image.BaseClickableImageView
         android:id="@+id/helpButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

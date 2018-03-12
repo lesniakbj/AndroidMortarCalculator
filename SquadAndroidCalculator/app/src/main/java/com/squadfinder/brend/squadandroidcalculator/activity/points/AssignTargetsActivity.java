@@ -66,9 +66,9 @@ public class AssignTargetsActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
         app.removeAllMarkedAssignments();
+        super.onBackPressed();
     }
 
     private void loadListView(MortarCalculatorApplication app, MaxHeightListView listView, PointType type) {

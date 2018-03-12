@@ -34,6 +34,7 @@ public class SquadMapListViewAdapter extends ArrayAdapter<SquadMap> {
     public View getView(int i, View view, @NonNull ViewGroup viewGroup) {
         View rowView = view;
         MapViewHolder viewHolder;
+        SquadMap map = maps.get(i);
         if(rowView == null) {
             viewHolder = new MapViewHolder();
 
@@ -46,7 +47,6 @@ public class SquadMapListViewAdapter extends ArrayAdapter<SquadMap> {
         }
 
         viewHolder = (MapViewHolder)rowView.getTag();
-        SquadMap map = maps.get(i);
 
         viewHolder.getMapTitle().setText(map.getMapName());
         viewHolder.getMapDescription().setText(map.getMapDescription());

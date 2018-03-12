@@ -1,33 +1,30 @@
 package com.squadfinder.brend.squadandroidcalculator.activity.map;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.ScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.squadfinder.brend.squadandroidcalculator.R;
+import com.squadfinder.brend.squadandroidcalculator.activity.MainActivity;
 import com.squadfinder.brend.squadandroidcalculator.activity.base.BaseActivity;
 import com.squadfinder.brend.squadandroidcalculator.adapter.MarkPointCalculatedListViewAdapter;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
-import com.squadfinder.brend.squadandroidcalculator.domain.calc.MortarMathUtil;
 import com.squadfinder.brend.squadandroidcalculator.domain.enums.PointType;
-import com.squadfinder.brend.squadandroidcalculator.listener.ImageGestureDetector;
-import com.squadfinder.brend.squadandroidcalculator.listener.ImageTouchListener;
-import com.squadfinder.brend.squadandroidcalculator.view.MaxHeightListView;
+import com.squadfinder.brend.squadandroidcalculator.listener.ImageDelegatingTouchListener;
+import com.squadfinder.brend.squadandroidcalculator.listener.image.SquadMapMarkingImageGestureDetector;
 import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView;
+import com.squadfinder.brend.squadandroidcalculator.view.image.BaseClickableImageView;
 
 import java.util.List;
-
-import static java.lang.Math.PI;
 
 /**
  * Created by brend on 3/11/2018.
@@ -46,16 +43,16 @@ public class MapCalculatedActivity extends BaseActivity {
         MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
 
         // Load our image
-        ImageView imageView = findViewById(R.id.mapImageView);
+        BaseClickableImageView imageView = findViewById(R.id.mapImageView);
         app.connectMarkPoints(this);
         Glide.with(this).load(app.getCurrentMapDrawable())
                 .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
                 .into(imageView);
 
         // Setup detectors needed locally and for chaining
-        GestureDetector.OnGestureListener gListener = new ImageGestureDetector(this, imageView);
+        GestureDetector.OnGestureListener gListener = new SquadMapMarkingImageGestureDetector(this, imageView);
         GestureDetector gDetector = new GestureDetector(this, gListener);
-        View.OnTouchListener tListener = new ImageTouchListener(gDetector);
+        View.OnTouchListener tListener = new ImageDelegatingTouchListener(gDetector);
         imageView.setOnTouchListener(tListener);
 
         // Setup the Scroll View for the image
@@ -66,12 +63,15 @@ public class MapCalculatedActivity extends BaseActivity {
         hScrollView.requestDisallowInterceptTouchEvent(true);
 
         // Setup our listview
-        ListView mortarListView = findViewById(R.id.mortarCalcMortarList);
-        loadListView(app, mortarListView, PointType.MORTAR);
-    }
+        List<MarkPoint> points = app.getMarkPointsByType(PointType.MORTAR);
+        ArrayAdapter<MarkPoint> pointAdapter = new MarkPointCalculatedListViewAdapter(this, points);
+        addListView(R.id.mortarCalcMortarList, pointAdapter, null);
 
-    private void loadListView(MortarCalculatorApplication app, ListView listView, PointType type) {
-        ArrayAdapter<MarkPoint> mpArrayAdapter = new MarkPointCalculatedListViewAdapter(this, app.getMarkPointsByType(type));
-        listView.setAdapter(mpArrayAdapter);
+        Button retButton = findViewById(R.id.mortarCalcReset);
+        retButton.setOnClickListener(v -> {
+            app.clear();
+            Intent reset = new Intent(this, MainActivity.class);
+            this.startActivity(reset);
+        });
     }
 }

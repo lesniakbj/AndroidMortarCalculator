@@ -35,21 +35,16 @@ public class ImageDrawUtil {
         if(bd != null) {
             Bitmap bitmap = bd.getBitmap();
 
-            // Create our working and mutable bitmaps
-            Bitmap working = Bitmap.createBitmap(bitmap);
-            Bitmap mutable = working.copy(Bitmap.Config.ARGB_8888, true);
-
             // Add points to the canvas
-            Canvas c = new Canvas(mutable);
+            Canvas c = new Canvas(bitmap);
             for (int i = 0; i < points.size(); i++) {
                 MarkPoint p = points.get(i);
                 drawSinglePoint(context, c, p);
-                addSnapshotImage(context, mutable, p);
+                addSnapshotImage(context, bitmap, p);
             }
 
-            // Set our image view to the mutated bitmap
-            imageView.setImageBitmap(mutable);
-            return new BitmapDrawable(context.getResources(), mutable);
+            imageView.setImageBitmap(bitmap);
+            return new BitmapDrawable(context.getResources(), bitmap);
         }
 
         return null;
@@ -80,21 +75,13 @@ public class ImageDrawUtil {
     }
 
     public static Drawable circleMarkPoint(Activity context, Drawable drawable, MarkPoint point) {
-        // Get the bitmap
         BitmapDrawable bd = (BitmapDrawable)drawable;
         if(bd != null) {
             Bitmap bitmap = bd.getBitmap();
-
-            // Create our working and mutable bitmaps
-            Bitmap working = Bitmap.createBitmap(bitmap);
-            Bitmap mutable = working.copy(Bitmap.Config.ARGB_8888, true);
-
-            Canvas c = new Canvas(mutable);
+            Canvas c = new Canvas(bitmap);
             circleSinglePoint(context, c, point);
-
-            return new BitmapDrawable(context.getResources(), mutable);
+            return new BitmapDrawable(context.getResources(), bitmap);
         }
-
         return null;
     }
 
@@ -120,15 +107,9 @@ public class ImageDrawUtil {
         BitmapDrawable bd = (BitmapDrawable)drawable;
         if(bd != null) {
             Bitmap bitmap = bd.getBitmap();
-
-            // Create our working and mutable bitmaps
-            Bitmap working = Bitmap.createBitmap(bitmap);
-            Bitmap mutable = working.copy(Bitmap.Config.ARGB_8888, true);
-
-            Canvas c = new Canvas(mutable);
+            Canvas c = new Canvas(bitmap);
             drawGridLines(context, c, majorGridDistancePx, minorGridDistancePx, width, height);
-
-            return new BitmapDrawable(context.getResources(), mutable);
+            return new BitmapDrawable(context.getResources(), bitmap);
         }
 
         return null;
@@ -169,11 +150,8 @@ public class ImageDrawUtil {
         if(bd != null) {
             Bitmap bitmap = bd.getBitmap();
 
-            // Create our working and mutable bitmaps
-            Bitmap working = Bitmap.createBitmap(bitmap);
-            Bitmap mutable = working.copy(Bitmap.Config.ARGB_8888, true);
-
-            Canvas c = new Canvas(mutable);
+            // Connect our points
+            Canvas c = new Canvas(bitmap);
             for (int i = 0; i < markPoints.size(); i++) {
                 MarkPoint p = markPoints.get(i);
                 List<MarkPoint> mpList = p.getMappedPoints();
@@ -184,7 +162,7 @@ public class ImageDrawUtil {
                 }
             }
 
-            return new BitmapDrawable(context.getResources(), mutable);
+            return new BitmapDrawable(context.getResources(), bitmap);
         }
 
         return null;

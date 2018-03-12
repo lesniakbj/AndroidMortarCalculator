@@ -16,6 +16,7 @@
     <string name="str_mark_edit_mode">You are in point edit mode, place your point to continue.</string>
     <string name="str_calc_title">Mortar Calculations</string>
     <string name="str_help_title">How to Use</string>
+    <string name="str_calc_return_to_home">Return</string>
     <string name="str_help">
         Welcome to Squad Finder\'s Mortar Calculator. Usage of this app is fairly simple, allowing
         you to get rounds on target almost immediately.\n\nFirst, choose a map. Once a map has

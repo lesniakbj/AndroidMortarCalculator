@@ -2,6 +2,8 @@ package com.squadfinder.brend.squadandroidcalculator.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import com.squadfinder.brend.squadandroidcalculator.util.ImageDrawUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -40,6 +43,18 @@ public class MortarCalculatorApplication extends Application {
     private static final int MARK_IMAGE_WIDTH = 2048;
     private static final int MARK_IMAGE_HEIGHT = 2048;
 
+    public void clear() {
+        currentMap = null;
+        currentPointList = null;
+        currentEditMarkPoint = null;
+        currentMapDrawable = null;
+        currentMarkPointId = 0;
+        targetMappings = null;
+        mortarArrayAdapter = null;
+        targetArrayAdapter = null;
+        draggedMarkPoint = null;
+    }
+
     public SquadMap getCurrentMap() {
         return currentMap;
     }
@@ -58,8 +73,7 @@ public class MortarCalculatorApplication extends Application {
         String gridY = MapGridUtil.getVerticalGridMajor(currentMap.getMapScalePixelsPerMeter(), y);
         String gridKeypad = MapGridUtil.getGridKeypad(currentMap.getMapScalePixelsPerMeter(), x, y);
         String gridSubKeypadKeypad = MapGridUtil.getGridSubKeypad(currentMap.getMapScalePixelsPerMeter(), x, y);
-        mp.setMapGrid(gridX + gridY + " - " + gridKeypad + " - " + gridSubKeypadKeypad);
-        Log.d("APPLICATION", String.format("Grid: %s", mp.getMapGrid()));
+        mp.setMapGrid(String.format(Locale.getDefault(), "%s%s-%s-%s", gridX, gridY, gridKeypad, gridSubKeypadKeypad));
         currentPointList.add(mp);
         currentMarkPointId++;
     }
@@ -69,7 +83,7 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void setMarkPointToEdit(MarkPoint markPointToEdit) {
-        this.currentEditMarkPoint = markPointToEdit;
+        MortarCalculatorApplication.currentEditMarkPoint = markPointToEdit;
     }
 
     public MarkPoint getMarkPointToEdit() {
@@ -89,6 +103,8 @@ public class MortarCalculatorApplication extends Application {
         MortarCalculatorApplication.currentMapDrawable = currentMapDrawable;
 
         if(firstSet) {
+            Bitmap bitmap = Bitmap.createScaledBitmap(((BitmapDrawable) MortarCalculatorApplication.currentMapDrawable).getBitmap(), MARK_IMAGE_WIDTH, MARK_IMAGE_HEIGHT, true);
+            MortarCalculatorApplication.currentMapDrawable = new BitmapDrawable(getResources(), bitmap);
             addGridLinesToMap(activity);
         }
     }
@@ -131,14 +147,6 @@ public class MortarCalculatorApplication extends Application {
             }
         }
         return points;
-    }
-
-    public void clear() {
-       currentMap = null;
-       currentPointList = null;
-       currentEditMarkPoint = null;
-       currentMapDrawable = null;
-       targetMappings = null;
     }
 
     public boolean addMortarMapping(MarkPoint mortarMark, MarkPoint targetMark) {

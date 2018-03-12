@@ -1,41 +1,33 @@
 package com.squadfinder.brend.squadandroidcalculator.listener;
 
+import android.graphics.Matrix;
+import android.graphics.PointF;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+
+import static com.android.volley.VolleyLog.TAG;
 
 /**
  * Created by brend on 3/9/2018.
  */
 
-public class ImageTouchListener implements View.OnTouchListener {
+public class ImageDelegatingTouchListener implements View.OnTouchListener {
     private float lastX;
     private float lastY;
 
     private GestureDetector gestureDetector;
 
-    public ImageTouchListener(GestureDetector gestureDetector) {
+    public ImageDelegatingTouchListener(GestureDetector gestureDetector) {
         this.gestureDetector = gestureDetector;
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                lastX = event.getX();
-                lastY = event.getY();
-                Log.d("LISTENER", String.format("Touch: [%f/%f].", lastX, lastY));
-
-                break;
-            }
-            case MotionEvent.ACTION_UP: {
-                v.performClick();
-                break;
-            }
-            default:
-                break;
-        }
+        v.performClick();
         gestureDetector.onTouchEvent(event);
         return true;
     }

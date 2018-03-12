@@ -7,10 +7,10 @@
     <color name="colorSecondary">#3d414d</color>
     <color name="colorAccent">#dec32f</color>
 
-    <color name="colorBlackTransparent">#64000000</color>
-    <color name="colorGrayTransparent">#64c4bfbf</color>
-    <color name="colorAccentTransparent">#64dec32f</color>
-    <color name="colorLightGreenTransparent">#649acc02</color>
+    <color name="colorBlackTransparent">#96000000</color>
+    <color name="colorGrayTransparent">#96c4bfbf</color>
+    <color name="colorAccentTransparent">#96dec32f</color>
+    <color name="colorLightGreenTransparent">#969acc02</color>
 
     <color name="colorLightGreen">#9acc02</color>
     <color name="colorLightRed">#ff4545</color>

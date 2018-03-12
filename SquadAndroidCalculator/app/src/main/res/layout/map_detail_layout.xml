@@ -16,8 +16,8 @@
             android:id="@+id/mapVerticalScroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/mapImageView"
+            <com.squadfinder.brend.squadandroidcalculator.view.image.BaseClickableImageView
+                android:id="@+id/mapDetailImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorLightRed"
+                android:background="@color/colorLightRed"
                 android:text="@string/str_btn_edit_points"
                 tools:text="@string/str_btn_edit_points" />
             <Button
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorLightGreen"
+                android:background="@color/colorLightGreen"
                 android:text="@string/str_btn_assing_targets"
                 tools:text="@string/str_btn_assing_targets" />
         </LinearLayout>

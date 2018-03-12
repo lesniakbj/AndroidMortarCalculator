@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mapDetailLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +15,7 @@
             android:id="@+id/mapVerticalScroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <ImageView
+            <com.squadfinder.brend.squadandroidcalculator.view.image.BaseClickableImageView
                 android:id="@+id/mapImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,4 +53,11 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/mortarCalcReset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightGreen"
+        android:text="@string/str_calc_return_to_home" />
 </LinearLayout>

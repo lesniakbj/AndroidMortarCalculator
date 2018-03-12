@@ -1,38 +1,35 @@
 package com.squadfinder.brend.squadandroidcalculator.activity.map;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.squadfinder.brend.squadandroidcalculator.R;
+import com.squadfinder.brend.squadandroidcalculator.activity.base.BaseActivity;
 import com.squadfinder.brend.squadandroidcalculator.activity.points.AssignTargetsActivity;
 import com.squadfinder.brend.squadandroidcalculator.activity.points.EditPointsActivity;
 import com.squadfinder.brend.squadandroidcalculator.application.MortarCalculatorApplication;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
-import com.squadfinder.brend.squadandroidcalculator.listener.ImageGestureDetector;
-import com.squadfinder.brend.squadandroidcalculator.listener.ImageTouchListener;
+import com.squadfinder.brend.squadandroidcalculator.listener.ImageDelegatingTouchListener;
+import com.squadfinder.brend.squadandroidcalculator.listener.StartIntentListener;
+import com.squadfinder.brend.squadandroidcalculator.listener.image.SquadMapMarkingImageGestureDetector;
 import com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.squadfinder.brend.squadandroidcalculator.view.image.BaseClickableImageView;
 
 
 /**
  * Created by brend on 3/6/2018.
  */
 
-public class MapDetailActivity extends Activity {
-    private Activity self;
+public class MapDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +38,11 @@ public class MapDetailActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.map_detail_layout);
 
-        // Set a self reference for later use
-        self = this;
-
-        // Load the map
+        // Load our application and relevant data
         MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
         SquadMap loadedMap = app.getCurrentMap();
 
-        // Load the Map String Data
+        // Load the Map Meta Data
         TextView mapName = findViewById(R.id.mapDetailMapName);
         TextView mapDesc = findViewById(R.id.mapDetailMapDescription);
         TextView mapDimensions = findViewById(R.id.mapDetailMapDimensions);
@@ -57,33 +51,19 @@ public class MapDetailActivity extends Activity {
         mapDimensions.setText(loadedMap.getDimensionString());
 
         // Load the Map Image View
-        ImageView imageView = findViewById(R.id.mapImageView);
-
-        // Load the Image
-        Picasso.get().load(loadedMap.getMapImageResourceId(this))
-            .resize(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight())
-            .into(imageView, new Callback() {
-                @Override
-                public void onSuccess() {
-                    app.setCurrentMapDrawable(self, imageView.getDrawable());
-                    app.fillImageViewMarkPoints(self, imageView, app.getMarkPointList());
-
-                    // I need something that can reload the drawable... this is ugly as... well you know...
-                    Glide.with(self).load(app.getCurrentMapDrawable())
-                            .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
-                            .into(imageView);
-                }
-
-                @Override
-                public void onError(Exception e) {
-
-                }
-            });
+        BaseClickableImageView imageView = findViewById(R.id.mapDetailImageView);
+        Drawable draw = getResources().getDrawable(loadedMap.getMapImageResourceId(this));
+        app.setCurrentMapDrawable(this, draw);
+        app.fillImageViewMarkPoints(this, imageView, app.getMarkPointList());
+        int width = MortarCalculatorApplication.getMarkImageWidth();
+        int height = MortarCalculatorApplication.getMarkImageHeight();
+        RequestOptions req = new RequestOptions().override(width, height);
+        Glide.with(this).load(app.getCurrentMapDrawable()).apply(req).into(imageView);
 
         // Setup detectors needed locally and for chaining
-        GestureDetector.OnGestureListener gListener = new ImageGestureDetector(this, imageView);
+        GestureDetector.OnGestureListener gListener = new SquadMapMarkingImageGestureDetector(this, imageView);
         GestureDetector gDetector = new GestureDetector(this, gListener);
-        View.OnTouchListener tListener = new ImageTouchListener(gDetector);
+        View.OnTouchListener tListener = new ImageDelegatingTouchListener(gDetector);
         imageView.setOnTouchListener(tListener);
 
         // Setup the Scroll View for the image
@@ -96,28 +76,14 @@ public class MapDetailActivity extends Activity {
         // Setup our button presses
         Button editPointsButton = findViewById(R.id.editPointsButton);
         Button assignTargetsButton = findViewById(R.id.assignTargetsButton);
-        editPointsButton.setOnClickListener(v -> {
-            Log.d("ACTIVITY", "Start new intent for Edit");
-            Intent editIntent = new Intent(this, EditPointsActivity.class);
-            this.startActivity(editIntent);
-        });
-        assignTargetsButton.setOnClickListener(v -> {
-            Log.d("ACTIVITY", "Start new intent for Assign");
-            Intent assignIntent = new Intent(this, AssignTargetsActivity.class);
-            this.startActivity(assignIntent);
-        });
+        editPointsButton.setOnClickListener(new StartIntentListener(this, EditPointsActivity.class));
+        assignTargetsButton.setOnClickListener(new StartIntentListener(this, AssignTargetsActivity.class));
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        // Clear saved points if we back out of the activity
         MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
         app.clear();
-    }
-
-    public enum MarkPointState {
-        CREATE,
-        EDIT;
+        super.onBackPressed();
     }
 }
