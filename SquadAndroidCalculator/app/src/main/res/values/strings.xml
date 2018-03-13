@@ -29,4 +29,5 @@
         once every mortar has targets (each mortar can have more than 1 target), you can move
         to the calculate phase, where azimuth and angle are calculated for you.
     </string>
+    <string name="str_assign_instructions">Drag a target to a mortar to assign</string>
 </resources>

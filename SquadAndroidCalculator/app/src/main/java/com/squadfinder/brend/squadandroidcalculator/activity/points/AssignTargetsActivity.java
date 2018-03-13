@@ -77,7 +77,6 @@ public class AssignTargetsActivity extends BaseActivity {
         ArrayAdapter<MarkPoint> mpArrayAdapter = new MarkPointTargetListViewAdapter(this, points);
         listView.setAdapter(mpArrayAdapter);
         listView.setLongClickable(true);
-        listView.setOnItemClickListener(new ListViewMarkPointListener(this));
         listView.setOnItemLongClickListener(new ListViewMarkPointLongClickListener(this));
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listView.setSelector(R.color.colorAccentTransparent);
