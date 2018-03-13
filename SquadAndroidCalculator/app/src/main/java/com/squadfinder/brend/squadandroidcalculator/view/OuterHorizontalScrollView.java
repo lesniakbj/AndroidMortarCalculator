@@ -3,6 +3,7 @@ package com.squadfinder.brend.squadandroidcalculator.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
@@ -37,9 +38,12 @@ public class OuterHorizontalScrollView extends HorizontalScrollView {
         return true;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        if(ev.getPointerCount() > 1) {
+            return true;
+        }
+
         super.onTouchEvent(ev);
         scrollView.dispatchTouchEvent(MotionEvent.obtain(ev.getDownTime(), ev.getEventTime(), ev.getAction(), ev.getX() + getScrollX(), ev.getY(), ev.getMetaState()));
         return true;
