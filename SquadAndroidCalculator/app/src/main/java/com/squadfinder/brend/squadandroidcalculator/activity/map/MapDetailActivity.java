@@ -1,5 +1,7 @@
 package com.squadfinder.brend.squadandroidcalculator.activity.map;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -52,13 +54,13 @@ public class MapDetailActivity extends BaseActivity {
 
         // Load the Map Image View
         BaseClickableImageView imageView = findViewById(R.id.mapDetailImageView);
-        Drawable draw = getResources().getDrawable(loadedMap.getMapImageResourceId(this));
-        app.setCurrentMapDrawable(this, draw);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), loadedMap.getMapImageResourceId(this));
+        app.setCurrentMapBitmap(this, bitmap);
         app.fillImageViewMarkPoints(this, imageView, app.getMarkPointList());
         int width = MortarCalculatorApplication.getMarkImageWidth();
         int height = MortarCalculatorApplication.getMarkImageHeight();
         RequestOptions req = new RequestOptions().override(width, height);
-        Glide.with(this).load(app.getCurrentMapDrawable()).apply(req).into(imageView);
+        Glide.with(this).load(app.getCurrentMapBitmap()).apply(req).into(imageView);
 
         // Setup detectors needed locally and for chaining
         GestureDetector.OnGestureListener gListener = new SquadMapMarkingImageGestureDetector(this, imageView);

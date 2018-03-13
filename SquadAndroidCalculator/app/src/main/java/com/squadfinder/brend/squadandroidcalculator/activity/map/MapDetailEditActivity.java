@@ -53,7 +53,7 @@ public class MapDetailEditActivity extends BaseActivity {
         // Load the Map Image View
         BaseClickableImageView imageView = findViewById(R.id.mapImageView);
         app.circleMarkPoint(this, editPoint);
-        Glide.with(this).load(app.getCurrentMapDrawable())
+        Glide.with(this).load(app.getCurrentMapBitmap())
             .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
             .into(imageView);
 

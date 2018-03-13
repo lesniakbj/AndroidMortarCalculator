@@ -2,6 +2,7 @@ package com.squadfinder.brend.squadandroidcalculator.util;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,26 +26,24 @@ import java.util.List;
 public class ImageDrawUtil {
     private static final int POINT_WIDTH = 12;
 
-    public static Drawable fillImageViewMarkPoints(Activity context, Drawable workingDrawable, ImageView imageView, List<MarkPoint> points) {
+    public static Bitmap fillImageViewMarkPoints(Activity context, Bitmap workingBitmap, ImageView imageView, List<MarkPoint> points) {
         if(points == null) {
             return null;
         }
 
         // Get the bitmap
-        BitmapDrawable bd = (BitmapDrawable)workingDrawable;
-        if(bd != null) {
-            Bitmap bitmap = bd.getBitmap();
+        if(workingBitmap != null) {
 
             // Add points to the canvas
-            Canvas c = new Canvas(bitmap);
+            Canvas c = new Canvas(workingBitmap);
             for (int i = 0; i < points.size(); i++) {
                 MarkPoint p = points.get(i);
                 drawSinglePoint(context, c, p);
-                addSnapshotImage(context, bitmap, p);
+                addSnapshotImage(context, workingBitmap, p);
             }
 
-            imageView.setImageBitmap(bitmap);
-            return new BitmapDrawable(context.getResources(), bitmap);
+            imageView.setImageBitmap(workingBitmap);
+            return workingBitmap;
         }
 
         return null;
@@ -74,13 +73,11 @@ public class ImageDrawUtil {
         c.drawRect(rect, outline);
     }
 
-    public static Drawable circleMarkPoint(Activity context, Drawable drawable, MarkPoint point) {
-        BitmapDrawable bd = (BitmapDrawable)drawable;
-        if(bd != null) {
-            Bitmap bitmap = bd.getBitmap();
+    public static Bitmap circleMarkPoint(Activity context, Bitmap bitmap, MarkPoint point) {
+        if(bitmap != null) {
             Canvas c = new Canvas(bitmap);
             circleSinglePoint(context, c, point);
-            return new BitmapDrawable(context.getResources(), bitmap);
+            return bitmap;
         }
         return null;
     }
@@ -102,14 +99,12 @@ public class ImageDrawUtil {
         return basePaint;
     }
 
-    public static Drawable fillImageViewGridLines(Activity context, Drawable drawable, double majorGridDistancePx, double minorGridDistancePx, int width, int height) {
+    public static Bitmap fillImageViewGridLines(Activity context, Bitmap bitmap, double majorGridDistancePx, double minorGridDistancePx, int width, int height) {
         // Get the bitmap
-        BitmapDrawable bd = (BitmapDrawable)drawable;
-        if(bd != null) {
-            Bitmap bitmap = bd.getBitmap();
+        if(bitmap != null) {
             Canvas c = new Canvas(bitmap);
             drawGridLines(context, c, majorGridDistancePx, minorGridDistancePx, width, height);
-            return new BitmapDrawable(context.getResources(), bitmap);
+            return bitmap;
         }
 
         return null;
@@ -144,12 +139,9 @@ public class ImageDrawUtil {
         }
     }
 
-    public static Drawable connectMarkPoints(Activity context, Drawable drawable, List<MarkPoint> markPoints) {
+    public static Bitmap connectMarkPoints(Activity context, Bitmap bitmap, List<MarkPoint> markPoints) {
         // Get the bitmap
-        BitmapDrawable bd = (BitmapDrawable)drawable;
-        if(bd != null) {
-            Bitmap bitmap = bd.getBitmap();
-
+        if(bitmap != null) {
             // Connect our points
             Canvas c = new Canvas(bitmap);
             for (int i = 0; i < markPoints.size(); i++) {
@@ -162,7 +154,7 @@ public class ImageDrawUtil {
                 }
             }
 
-            return new BitmapDrawable(context.getResources(), bitmap);
+            return bitmap;
         }
 
         return null;

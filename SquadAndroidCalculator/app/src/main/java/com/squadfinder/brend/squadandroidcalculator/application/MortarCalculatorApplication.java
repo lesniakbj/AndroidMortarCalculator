@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.squadfinder.brend.squadandroidcalculator.domain.SquadMap;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MapGridUtil;
 import com.squadfinder.brend.squadandroidcalculator.domain.calc.MarkPoint;
@@ -26,19 +27,19 @@ import java.util.Map;
  */
 
 public class MortarCalculatorApplication extends Application {
-    private static SquadMap currentMap;
-    private static List<MarkPoint> currentPointList;
-    private static MarkPoint currentEditMarkPoint;
-    private static Drawable currentMapDrawable;
-    private static int currentMarkPointId;
+    private SquadMap currentMap;
+    private List<MarkPoint> currentPointList;
+    private MarkPoint currentEditMarkPoint;
+    private int currentMarkPointId;
+    private static Bitmap currentMapBitmap;
 
     // For Target Mapping
-    private static Map<MarkPoint, List<MarkPoint>> targetMappings;
-    private static ArrayAdapter<MarkPoint> mortarArrayAdapter;
-    private static ArrayAdapter<MarkPoint> targetArrayAdapter;
+    private Map<MarkPoint, List<MarkPoint>> targetMappings;
+    private ArrayAdapter<MarkPoint> mortarArrayAdapter;
+    private ArrayAdapter<MarkPoint> targetArrayAdapter;
 
     // For Dragging
-    private static MarkPoint draggedMarkPoint;
+    private MarkPoint draggedMarkPoint;
 
     private static final int MARK_IMAGE_WIDTH = 2048;
     private static final int MARK_IMAGE_HEIGHT = 2048;
@@ -47,12 +48,13 @@ public class MortarCalculatorApplication extends Application {
         currentMap = null;
         currentPointList = null;
         currentEditMarkPoint = null;
-        currentMapDrawable = null;
+        currentMapBitmap = null;
         currentMarkPointId = 0;
         targetMappings = null;
         mortarArrayAdapter = null;
         targetArrayAdapter = null;
         draggedMarkPoint = null;
+        Glide.get(this).clearMemory();
     }
 
     public SquadMap getCurrentMap() {
@@ -60,7 +62,7 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void setCurrentMap(SquadMap currentMap) {
-        MortarCalculatorApplication.currentMap = currentMap;
+        this.currentMap = currentMap;
     }
 
     public void addMarkPoint(float x, float y, PointType pointType) {
@@ -83,28 +85,26 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void setMarkPointToEdit(MarkPoint markPointToEdit) {
-        MortarCalculatorApplication.currentEditMarkPoint = markPointToEdit;
+        this.currentEditMarkPoint = markPointToEdit;
     }
 
     public MarkPoint getMarkPointToEdit() {
         return currentEditMarkPoint;
     }
 
-    public Drawable getCurrentMapDrawable() {
-        return currentMapDrawable;
+    public Bitmap getCurrentMapBitmap() {
+        return currentMapBitmap;
     }
 
-    public void setCurrentMapDrawable(Activity activity, Drawable currentMapDrawable) {
+    public void setCurrentMapBitmap(Activity activity, Bitmap bitmap) {
         boolean firstSet = false;
-        if(MortarCalculatorApplication.currentMapDrawable == null) {
+        if(currentMapBitmap == null) {
             firstSet = true;
         }
-
-        MortarCalculatorApplication.currentMapDrawable = currentMapDrawable;
+        currentMapBitmap = bitmap;
 
         if(firstSet) {
-            Bitmap bitmap = Bitmap.createScaledBitmap(((BitmapDrawable) MortarCalculatorApplication.currentMapDrawable).getBitmap(), MARK_IMAGE_WIDTH, MARK_IMAGE_HEIGHT, true);
-            MortarCalculatorApplication.currentMapDrawable = new BitmapDrawable(getResources(), bitmap);
+            currentMapBitmap = Bitmap.createScaledBitmap(currentMapBitmap, MARK_IMAGE_WIDTH, MARK_IMAGE_HEIGHT, true);
             addGridLinesToMap(activity);
         }
     }
@@ -122,16 +122,17 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void fillImageViewMarkPoints(Activity activity, ImageView imageView, List<MarkPoint> points) {
-        Drawable updated = ImageDrawUtil.fillImageViewMarkPoints(activity, currentMapDrawable, imageView, points);
+        Bitmap updated = ImageDrawUtil.fillImageViewMarkPoints(activity, currentMapBitmap, imageView, points);
         if(updated != null) {
-            setCurrentMapDrawable(activity, updated);
+            // setCurrentMapDrawable(activity, updated);
+            setCurrentMapBitmap(activity, updated);
         }
     }
 
     public void circleMarkPoint(Activity activity, MarkPoint editPoint) {
-        Drawable updated = ImageDrawUtil.circleMarkPoint(activity, currentMapDrawable, editPoint);
+        Bitmap updated = ImageDrawUtil.circleMarkPoint(activity, currentMapBitmap, editPoint);
         if(updated != null) {
-            setCurrentMapDrawable(activity, updated);
+            setCurrentMapBitmap(activity, updated);
         }
     }
 
@@ -207,9 +208,9 @@ public class MortarCalculatorApplication extends Application {
         double majorGridDistancePx = MapGridUtil.getMajorGridPixelDistance(scale);
         double minorGridDistancePx = MapGridUtil.getMinorGridPixelDistanceFromMajorGridPixelScale(majorGridDistancePx);
 
-        Drawable updated = ImageDrawUtil.fillImageViewGridLines(activity, currentMapDrawable, majorGridDistancePx, minorGridDistancePx, MARK_IMAGE_WIDTH, MARK_IMAGE_HEIGHT);
+        Bitmap updated = ImageDrawUtil.fillImageViewGridLines(activity, currentMapBitmap, majorGridDistancePx, minorGridDistancePx, MARK_IMAGE_WIDTH, MARK_IMAGE_HEIGHT);
         if(updated != null) {
-            setCurrentMapDrawable(activity, updated);
+            setCurrentMapBitmap(activity, updated);
         }
     }
 
@@ -221,21 +222,23 @@ public class MortarCalculatorApplication extends Application {
     }
 
     public void connectMarkPoints(Activity context) {
-        Drawable updated = ImageDrawUtil.connectMarkPoints(context, currentMapDrawable, getMarkPointsByType(PointType.MORTAR));
+        Bitmap updated = ImageDrawUtil.connectMarkPoints(context, currentMapBitmap, getMarkPointsByType(PointType.MORTAR));
         if(updated != null) {
-            setCurrentMapDrawable(context, updated);
+            setCurrentMapBitmap(context, updated);
         }
     }
 
     public void removeAllMarkedAssignments() {
         targetMappings = null;
-        for(MarkPoint mp : currentPointList) {
-            mp.setMappedPoints(null);
+        if(currentPointList != null) {
+            for (MarkPoint mp : currentPointList) {
+                mp.setMappedPoints(null);
+            }
         }
     }
 
     public void setDraggedMarkPoint(MarkPoint draggedMarkPoint) {
-        MortarCalculatorApplication.draggedMarkPoint = draggedMarkPoint;
+        this.draggedMarkPoint = draggedMarkPoint;
     }
 
     public MarkPoint getDraggedMarkPoint() {
@@ -254,5 +257,11 @@ public class MortarCalculatorApplication extends Application {
         degAngle = (degAngle > 0) ? degAngle : degAngle + 360;
         Log.d("ACTIVITY", String.format("Angle: %f", degAngle));
         return degAngle;
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(this).clearMemory();
     }
 }

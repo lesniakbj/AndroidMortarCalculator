@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.squadfinder.brend.squadandroidcalculator.R;
 import com.squadfinder.brend.squadandroidcalculator.activity.base.BaseActivity;
@@ -20,9 +21,6 @@ import com.squadfinder.brend.squadandroidcalculator.view.MaxHeightListView;
  */
 
 public class EditPointsActivity extends BaseActivity {
-    private static final int PAD = 30;
-    private static int listViewMaxHeight;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +30,6 @@ public class EditPointsActivity extends BaseActivity {
 
         // Get our application
         MortarCalculatorApplication app = (MortarCalculatorApplication) getApplication();
-
-        // Get our Screen Height
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        listViewMaxHeight = (dm.heightPixels / 2) - PAD;
 
         // Load mortars and distance to targets
         MaxHeightListView mortarListView = findViewById(R.id.mortarMarkListView);
@@ -48,7 +41,6 @@ public class EditPointsActivity extends BaseActivity {
     }
 
     private void loadListView(MortarCalculatorApplication app, MaxHeightListView listView, PointType type) {
-        listView.setMaxHeight(listViewMaxHeight);
         ArrayAdapter<MarkPoint> mpArrayAdapter = new MarkPointListViewAdapter(this, app.getMarkPointsByType(type));
         listView.setAdapter(mpArrayAdapter);
         listView.setOnItemClickListener(new ListViewMarkPointListener(this));

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mapDetailLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,11 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2">
+
         <ScrollView
             android:id="@+id/mapVerticalScroll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <ImageView
+
+            <com.squadfinder.brend.squadandroidcalculator.view.image.BaseClickableImageView
                 android:id="@+id/mapImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -24,15 +25,17 @@
                 android:layout_marginRight="10dp" />
         </ScrollView>
     </com.squadfinder.brend.squadandroidcalculator.view.OuterHorizontalScrollView>
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="4"
         android:background="@drawable/top_border"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
+
         <TextView
             android:id="@+id/mapDetailEditModeTitle"
             android:layout_width="match_parent"
@@ -41,6 +44,7 @@
             android:textSize="12sp"
             android:textColor="@color/colorAccentTransparent"
             android:text="@string/str_mark_edit_mode_title" />
+
         <TextView
             android:id="@+id/mapDetailMapName"
             android:layout_width="match_parent"
@@ -55,6 +59,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorAccent"
             android:textSize="18sp" />
+
         <TextView
             android:id="@+id/mapDetailMapDescription"
             android:layout_width="match_parent"
@@ -68,6 +73,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/textDark"
             android:textSize="12sp" />
+
         <TextView
             android:id="@+id/mapDetailMapDimensions"
             android:layout_width="match_parent"
@@ -81,20 +87,19 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/textDark"
             android:textSize="12sp" />
-        <LinearLayout
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/deletePointButton"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dp"
-            android:padding="8dp">
-            <Button
-                android:id="@+id/deletePointButton"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorLightRed"
-                android:text="@string/str_btn_delete_point"
-                tools:text="@string/str_btn_delete_point" />
-        </LinearLayout>
+            android:background="@color/colorLightRed"
+            android:text="@string/str_btn_delete_point" />
     </LinearLayout>
 </LinearLayout>

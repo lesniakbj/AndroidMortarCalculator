@@ -45,7 +45,7 @@ public class MapCalculatedActivity extends BaseActivity {
         // Load our image
         BaseClickableImageView imageView = findViewById(R.id.mapImageView);
         app.connectMarkPoints(this);
-        Glide.with(this).load(app.getCurrentMapDrawable())
+        Glide.with(this).load(app.getCurrentMapBitmap())
                 .apply(new RequestOptions().override(MortarCalculatorApplication.getMarkImageWidth(), MortarCalculatorApplication.getMarkImageHeight()))
                 .into(imageView);
 
