@@ -54,7 +54,7 @@ public class SquadMap implements Parcelable {
         this.mapName = mapName;
     }
 
-    public int getMapWidth() {
+    private int getMapWidth() {
         return mapWidth;
     }
 
@@ -62,7 +62,7 @@ public class SquadMap implements Parcelable {
         this.mapWidth = mapWidth;
     }
 
-    public int getMapHeight() {
+    private int getMapHeight() {
         return mapHeight;
     }
 
@@ -134,7 +134,7 @@ public class SquadMap implements Parcelable {
     }
 
     public int getMapImageResourceId(Activity context) {
-        String mapImg = getMapName().toLowerCase().replace("'", "").replace(" ", "_") + "_map";
+        String mapImg = getMapName().toLowerCase().replace("'", "").replace(" ", "_") + "_map_min";
         return context.getResources().getIdentifier(mapImg, "drawable", context.getPackageName());
     }
 

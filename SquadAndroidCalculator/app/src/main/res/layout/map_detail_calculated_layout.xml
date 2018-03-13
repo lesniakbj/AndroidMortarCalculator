@@ -54,10 +54,19 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/mortarCalcReset"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorLightGreen"
-        android:text="@string/str_calc_return_to_home" />
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:padding="8dp">
+        <Button
+            android:id="@+id/mortarCalcReset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLightGreen"
+            android:text="@string/str_calc_return_to_home" />
+    </LinearLayout>
+
 </LinearLayout>
