@@ -27,10 +27,12 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="4"
         android:background="@drawable/top_border"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/mortarCalcTitle"
@@ -59,14 +61,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:padding="8dp">
+        android:layout_marginTop="5dp">
         <Button
             android:id="@+id/mortarCalcReset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorLightGreen"
-            android:text="@string/str_calc_return_to_home" />
+            android:text="@string/str_calc_return_to_home"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </LinearLayout>
