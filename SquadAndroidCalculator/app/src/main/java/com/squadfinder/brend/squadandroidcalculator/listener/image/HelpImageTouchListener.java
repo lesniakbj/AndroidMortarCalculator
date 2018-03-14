@@ -15,8 +15,12 @@ public class HelpImageTouchListener implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        v.performClick();
-        context.buildAlertDialog(R.string.str_help_title, R.string.str_help, R.string.str_ok).show();
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                v.performClick();
+                context.buildAlertDialog(R.string.str_help_title, R.string.str_help, R.string.str_ok).show();
+                break;
+        }
         return true;
     }
 }
